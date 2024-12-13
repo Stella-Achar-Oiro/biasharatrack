@@ -1,6 +1,6 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 
 interface FeatureCardProps {
   icon: LucideIcon;

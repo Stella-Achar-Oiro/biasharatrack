@@ -1,6 +1,6 @@
 import React from 'react';
 import TestimonialCard from './TestimonialCard';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { useTranslation } from 'react-i18next';
 
 export default function Impact() {

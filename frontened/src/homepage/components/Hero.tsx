@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { useTranslation } from 'react-i18next';
 
 export default function Hero() {

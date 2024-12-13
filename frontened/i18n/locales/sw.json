@@ -1,0 +1,398 @@
+{
+  "errors": {
+    "notFound": {
+      "title": "Ukurasa Haujapatikana",
+      "message": "Ukurasa unaoutafuta haupo au umehamishwa.",
+      "buttons": {
+        "goBack": "Rudi Nyuma",
+        "dashboard": "Nenda kwenye Dashibodi"
+      }
+    },
+    "unauthorized": {
+      "title": "Huna Ruhusa",
+      "message": "Huna ruhusa ya kufikia ukurasa huu.",
+      "buttons": {
+        "login": "Ingia",
+        "home": "Nenda Mwanzo"
+      }
+    },
+    "serverError": {
+      "title": "Hitilafu ya Seva",
+      "message": "Samahani! Kuna hitilafu imetokea kwenye seva yetu.",
+      "buttons": {
+        "tryAgain": "Jaribu Tena",
+        "dashboard": "Nenda kwenye Dashibodi"
+      }
+    }
+  },
+  "userProfile": {
+    "business": "Biashara",
+    "accountSettings": "Mipangilio ya Akaunti",
+    "imageAlt": "Picha ya wasifu ya {{name}}"
+  },
+  "creditMetrics": {
+    "totalOutstanding": "Jumla ya Deni",
+    "activeAccounts": "Akaunti za Mkopo Zinazotumika",
+    "overdueAccounts": "Akaunti Zilizochelewa",
+    "upcomingPayments": "Malipo Yanayokuja"
+  },
+  "credits": {
+    "terms": {
+      "title": "Masharti ya Mkopo",
+      "maxCreditPeriod": "Kipindi cha Juu cha Mkopo (Siku)",
+      "interestRate": "Kiwango cha Riba (%)",
+      "lateFee": "Ada ya Kuchelewa Kulipa (KSH)",
+      "days": "siku",
+      "saveChanges": "Hifadhi Mabadiliko"
+    },
+    "customerList": {
+      "title": "Mikopo ya Wateja",
+      "searchPlaceholder": "Tafuta wateja...",
+      "allStatus": "Hali Zote",
+      "active": "Inafanya kazi",
+      "overdue": "Imepitiliza",
+      "paid": "Imelipwa",
+      "tableHeaders": {
+        "customer": "Mteja",
+        "totalCredit": "Jumla ya Mkopo",
+        "balanceDue": "Salio la Kulipa",
+        "lastPayment": "Malipo ya Mwisho",
+        "status": "Hali",
+        "actions": "Vitendo"
+      },
+      "actions": {
+        "viewDetails": "Tazama Maelezo",
+        "recordPayment": "Rekodi Malipo",
+        "sendReminder": "Tuma Ukumbusho"
+      }
+    },
+    "upcomingPayments": {
+      "title": "Malipo Yanayokuja",
+      "due": "Tarehe ya Kulipa",
+      "overdue": "Imechelewa",
+      "noPayments": "Hakuna malipo yanayokuja"
+    }
+  },
+  "categories": {
+    "food": "Vyakula na Vinywaji",
+    "electronics": "Vifaa vya Elektroniki",
+    "clothing": "Nguo na Vifaa vya Mapambo",
+    "household": "Vifaa vya Nyumbani",
+    "health": "Afya na Urembo",
+    "stationery": "Vifaa vya Kuandikia",
+    "other": "Vingine"
+  },
+  "salesEntry": {
+    "title1": "Usimamizi wa Mauzo",
+    "title": "Rekodi Mauzo Mapya",
+    "shortcuts": {
+      "title": "Njia za mkato:",
+      "focusSearch": "Angazia utafutaji",
+      "barcodeMode": "Hali ya msimbo"
+    },
+    "remaining": "Salio Lililobaki",
+    "search": {
+      "placeholder": "Tafuta kwa jina la bidhaa, SKU, au msimbo",
+      "searching": "Inatafuta..."
+    },
+    "product": {
+      "name": "Jina la Bidhaa",
+      "sku": "SKU",
+      "stock": "Hifadhi",
+      "category": "Kategoria",
+      "barcode": "Msimbo",
+      "quantity": "Kiasi",
+      "price": "Bei",
+      "available": "Zinazopatikana"
+    },
+    "table": {
+      "product": "Bidhaa",
+      "quantity": "Kiasi",
+      "price": "Bei",
+      "subtotal": "Jumla ndogo",
+      "total": "Jumla",
+      "actions": "Vitendo"
+    },
+    "payment": {
+      "method": "Njia ya Malipo",
+      "methods": {
+        "cash": "Pesa Taslimu",
+        "mpesa": "M-PESA",
+        "credit": "Mkopo"
+      },
+      "mpesaRef": "Namba ya Muamala wa M-PESA",
+      "amount": "Kiasi (KSH)",
+      "mpesaNo": "Nambari ya M-PESA"
+    },
+    "customer": {
+      "name": "Jina la Mteja",
+      "phone": "Namba ya Simu ya Mteja",
+      "amount": "Jumla ya kiasi",
+      "amountPaid": "Kiasi kilicholipwa"
+    },
+    "buttons": {
+      "completeSale": "Kamilisha Mauzo"
+    },
+    "messages": {
+      "selectProduct": "Tafadhali chagua bidhaa na uweke kiasi sahihi",
+      "addProduct": "Tafadhali ongeza angalau bidhaa moja",
+      "success": "Mauzo yamerekidiwa kwa mafanikio!",
+      "error": "Imeshindwa kurekodi mauzo. Tafadhali jaribu tena.",
+      "stockLimit": "Kuna vipande {quantity} tu vilivyopo",
+      "phoneLabel": "Namba ya Simu ya M-PESA",
+      "phoneRequired": "Namba ya simu inahitajika",
+      "amountLabel": "Kiasi (KES)",
+      "initiateButton": "Anza Malipo ya M-PESA",
+      "processing": "Inashughulikia M-PESA...",
+      "initiated": "Malipo Yameanzishwa ✓",
+      "checkPhone": "Tafadhali angalia simu yako kukamilisha malipo ya M-PESA. Ukisha, bonyeza \"Kamilisha Mauzo\" hapa chini."
+    }
+  },
+  "salesHistory": {
+    "title": "Mauzo ya Hivi Karibuni",
+    "export": "Hamisha",
+    "search": {
+      "placeholder": "Tafuta mauzo..."
+    },
+    "filters": {
+      "payment": {
+        "all": "Malipo Yote",
+        "cash": "Pesa Taslimu",
+        "mpesa": "M-PESA",
+        "credit": "Mkopo"
+      }
+    },
+    "table": {
+      "productName": "Jina la Bidhaa",
+      "quantity": "Wingi",
+      "amount": "Kiasi",
+      "payment": "Malipo",
+      "date": "Tarehe",
+      "actions": "Vitendo"
+    }
+  },
+  "salesInsights": {
+    "metrics": {
+      "dailyRevenue": "Mapato ya Siku",
+      "weeklyRevenue": "Mapato ya Wiki",
+      "monthlyRevenue": "Mapato ya Mwezi",
+      "topProduct": "Bidhaa Bora"
+    },
+    "units": "vipande",
+    "changes": {
+      "increase": "ongezeko",
+      "decrease": "punguzo"
+    }
+  },
+  "inventory": {
+    "addProduct": {
+      "title": "Ongeza Bidhaa Mpya",
+      "productName": "Jina la Bidhaa",
+      "description": "Maelezo",
+      "category": "Kategoria",
+      "selectCategory": "Chagua kategoria",
+      "price": "Bei (KSH)",
+      "quantity": "Kiasi",
+      "barcode": "Msimbo wa Pau",
+      "lowStockThreshold": "Kiwango cha Chini cha Hifadhi",
+      "uploadImage": "Buruta na uache picha ya bidhaa yako hapa, au",
+      "browse": "tafuta",
+      "addButton": "Ongeza Bidhaa",
+      "success": "Bidhaa imeongezwa kwa mafanikio!",
+      "error": "Imeshindwa kuongeza bidhaa. Tafadhali jaribu tena."
+    },
+    "lowStockAlerts": {
+      "title": "Arifa za Bidhaa Zinazokaribia Kuisha",
+      "export": "Hamisha",
+      "searchPlaceholder": "Tafuta arifa...",
+      "status": {
+        "all": "Hali Zote",
+        "resolved": "Zilizoshughulikiwa",
+        "unresolved": "Hazijashughulikiwa"
+      },
+      "quantity": "Kiasi",
+      "threshold": "Kiwango",
+      "created": "Imetengenezwa",
+      "resolveButton": "Shughulikia"
+    },
+    "productList": {
+      "title": "Orodha ya Bidhaa",
+      "searchPlaceholder": "Tafuta bidhaa...",
+      "allCategories": "Kategoria Zote",
+      "stockFilter": {
+        "all": "Hifadhi Zote",
+        "low": "Hifadhi Ndogo",
+        "out": "Zimekwisha",
+        "in": "Zinapatikana"
+      },
+      "tableHeaders": {
+        "product": "Bidhaa",
+        "category": "Kategoria",
+        "quantity": "Kiasi",
+        "price": "Bei",
+        "lastUpdated": "Mara ya Mwisho Kusasishwa",
+        "actions": "Vitendo"
+      },
+      "minimum": "Chini",
+      "actions": {
+        "view": "Tazama",
+        "edit": "Hariri",
+        "delete": "Futa"
+      }
+    }
+  },
+  "creditPanel": {
+    "title": "Usimamizi wa Mikopo",
+    "outstanding": "Deni",
+    "paymentsdue": "malipo {{ count }} yanayotakiwa leo",
+    "button": "Simamia Mikopo"
+  },
+  "financialPanel": {
+    "title": "Muhtasari wa Kifedha",
+    "netProfit": "Faida Halisi",
+    "increase": "ongezeko {{percentage}}% mwezi huu",
+    "button": "Tazama Ripoti"
+  },
+  "inventoryPanel": {
+    "title": "Hali ya Bidhaa",
+    "totalItems": "Jumla ya Bidhaa",
+    "lowStock": "malipo {{count}} yanayotakiwa leo",
+    "button": "Ongeza Bidhaa Mpya"
+  },
+  "salesPanel": {
+    "title": "Mauzo ya Leo",
+    "totalSales": "Jumla ya Mauzo",
+    "increase": "ongezeko {{percentage}}% kutoka jana",
+    "button": "Mauzo Mapya"
+  },
+  "analyticsPanel": {
+    "title": "Muhtasari wa Uchambuzi",
+    "totalSales": "Jumla ya Mauzo Mwezi Huu",
+    "growth": "Ukuaji wa {{percent}}% kutoka mwezi uliopita",
+    "button": "Tazama Ripoti Kamili"
+  },
+  "tutorialPanel": {
+    "title": "Mafunzo",
+    "newVideos": "Mafunzo Mapya",
+    "latestVideo": "Tazama Mafunzo ya Hivi Karibuni",
+    "button": "Tazama Mafunzo Yote"
+  },
+  "dashboard": {
+    "navigation": {
+      "dashboard": "Dashibodi",
+      "inventory": "Bidhaa",
+      "sales": "Mauzo",
+      "analytics": "Uchambuzi",
+      "credit": "Mikopo",
+      "reports": "Ripoti",
+      "tutorials": "Mafunzo",
+      "settings": "Mipangilio",
+      "signOut": "Toka"
+    },
+    "search": {
+      "placeholder": "Tafuta",
+      "label": "Sehemu ya kutafuta",
+      "notifications": "Tazama arifa"
+    },
+    "sidebar": {
+      "openSidebar": "Fungua upau wa kando"
+    }
+  },
+  "hero": {
+    "title": "Kuwezesha Wafanyabiashara wa Kenya na Zana Bora za Kibiashara",
+    "subtitle": "Boresha biashara yako na suluhisho letu kamili la usimamizi wa bidhaa, ufuatiliaji wa mauzo, na ufahamu wa kifedha.",
+    "cta": "Anza Sasa"
+  },
+  "features": {
+    "title": "Vipengele Vinavyoimarisha Biashara Yako",
+    "subtitle": "Kila unachohitaji kusimamia biashara yako kwa ufanisi",
+    "items": {
+      "inventory": {
+        "title": "Usimamizi wa Bidhaa",
+        "description": "Ufuatiliaji rahisi wa bidhaa kwa kutumia picha na skana ya msimbo."
+      },
+      "sales": {
+        "title": "Kurekodi Mauzo",
+        "description": "Muunganisho rahisi wa M-PESA na risiti za kidijitali kwa kila muamala."
+      },
+      "accounting": {
+        "title": "Uhasibu wa Msingi",
+        "description": "Fuatilia faida, hasara, na matumizi kwa ripoti rahisi kuelewa."
+      },
+      "multilingual": {
+        "title": "Msaada wa Lugha Nyingi",
+        "description": "Tumia programu kwa Kiswahili, Kiingereza, au lugha yako unayopendelea."
+      },
+      "offline": {
+        "title": "Hali ya Nje ya Mtandao",
+        "description": "Endelea kufanya kazi hata bila mtandao - data yako itasawazishwa ukiwa mtandaoni."
+      },
+      "analytics": {
+        "title": "Uchanganuzi Bora",
+        "description": "Pata ufahamu wa mienendo ya msimu na mapendekezo ya kujaza bidhaa."
+      }
+    }
+  },
+  "impact": {
+    "title": "Kuleta Mabadiliko ya Kweli",
+    "subtitle": "Sikia kutoka kwa wafanyabiashara walioibadilisha biashara yao",
+    "testimonials": {
+      "testimonial1": {
+        "quote": "BiasharaTrack imebadilisha jinsi ninavyosimamia duka langu. Muunganisho wa M-PESA unaokoa muda wangu sana!",
+        "author": "Sarah Mwangi",
+        "business": "Mmiliki wa Duka la Vyakula, Nairobi"
+      },
+      "testimonial2": {
+        "quote": "Kuweza kutumia programu kwa Kiswahili kumefanya iwe rahisi sana kwangu kufuatilia bidhaa na mauzo yangu.",
+        "author": "John Kamau",
+        "business": "Mmiliki wa Duka la Vifaa, Mombasa"
+      }
+    }
+  },
+  "cta": {
+    "title": "Jiunge na Harakati za Kubadilisha Biashara Yako!",
+    "subtitle": "Anza kusimamia biashara yako kwa ubora zaidi na BiasharaTrack",
+    "button": "Jiandikishe Sasa"
+  },
+  "footer": {
+    "tagline": "Kuwasaidia wafanyabiashara kwa zana bora za kibiashara",
+    "quickLinks": "Viungo vya Haraka",
+    "support": "Msaada",
+    "connect": "Tuunganishe",
+    "rights": "Haki zote zimehifadhiwa.",
+    "links": {
+      "about": "Kuhusu Sisi",
+      "features": "Vipengele",
+      "pricing": "Bei",
+      "help": "Kituo cha Msaada",
+      "contact": "Wasiliana Nasi",
+      "privacy": "Sera ya Faragha"
+    }
+  },
+  "auth": {
+    "backToHome": "Rudi Nyumbani",
+    "email": "Anwani ya barua pepe",
+    "emailPlaceholder": "wewe@mfano.com",
+    "password": "Nywila",
+    "passwordPlaceholder": "••••••••",
+    "fullName": "Jina Kamili",
+    "fullNamePlaceholder": "John Doe",
+    "login": {
+      "title": "Karibu tena",
+      "noAccount": "Huna akaunti?",
+      "signUpLink": "Jisajili",
+      "rememberMe": "Nikumbuke",
+      "forgotPassword": "Umesahau nywila?",
+      "submit": "Ingia",
+      "loading": "Kupakia...",
+      "imageAlt": "Mandhari ya Soko la Kenya"
+    },
+    "signup": {
+      "title": "Tengeneza akaunti yako",
+      "haveAccount": "Una akaunti tayari?",
+      "loginLink": "Ingia",
+      "submit": "Tengeneza akaunti",
+      "imageAlt": "Muuzaji wa Soko la Kenya"
+    }
+  }
+}

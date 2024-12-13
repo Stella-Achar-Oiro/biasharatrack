@@ -1,7 +1,7 @@
 import React from 'react';
 import { Facebook, Twitter, MessageCircle } from 'lucide-react';
 import FooterSection from './FooterSection';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { useTranslation } from 'react-i18next';
 
 export default function Footer() {

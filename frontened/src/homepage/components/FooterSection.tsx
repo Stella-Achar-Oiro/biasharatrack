@@ -1,5 +1,5 @@
 import React from 'react';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 
 interface FooterLink {
   label: string;

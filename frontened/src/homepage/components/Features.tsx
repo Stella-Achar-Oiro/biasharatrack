@@ -1,7 +1,7 @@
 import React from 'react';
 import { Smartphone, BarChart3, Globe2, WifiOff, Calculator, Package } from 'lucide-react';
 import FeatureCard from './FeatureCard';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { useTranslation } from 'react-i18next';
 
 const featureIcons = {
