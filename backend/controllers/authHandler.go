@@ -81,9 +81,12 @@ func (auth *AuthHandler) Login(c *gin.Context) {
 		"message": "Login successful",
 		"token":   tokenString,
 		"user": gin.H{
-			"id":        user.ID,
-			"full_name": user.FullName,
-			"email":     user.Email,
+			"id":            user.ID,
+			"full_name":     user.FullName,
+			"email":         user.Email,
+			"business_name": user.BusinessName,
+			"telephone":     user.Telephone,
+			"location":      user.Location,
 		},
 	})
 }
@@ -129,9 +132,12 @@ func (auth *AuthHandler) Register(c *gin.Context) {
 
 	// Create new user
 	newUser := models.User{
-		FullName: registerRequest.FullName,
-		Email:    registerRequest.Email,
-		Password: string(hashedPassword),
+		FullName:     registerRequest.FullName,
+		Email:        registerRequest.Email,
+		Password:     string(hashedPassword),
+		BusinessName: registerRequest.BusinessName,
+		Telephone:    registerRequest.Telephone,
+		Location:     registerRequest.Location,
 	}
 
 	result = auth.db.Create(&newUser)
@@ -143,10 +149,13 @@ func (auth *AuthHandler) Register(c *gin.Context) {
 
 	// Generate JWT token for the new user
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id":   newUser.ID,
-		"email":     newUser.Email,
-		"full_name": newUser.FullName,
-		"exp":       time.Now().Add(time.Hour * 24).Unix(),
+		"user_id":       newUser.ID,
+		"email":         newUser.Email,
+		"full_name":     newUser.FullName,
+		"business_name": newUser.BusinessName,
+		"telephone":     newUser.Telephone,
+		"location":      newUser.Location,
+		"exp":           time.Now().Add(time.Hour * 24).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte("your-secret-key")) // To Do Later Replace with secure secret key
@@ -161,9 +170,12 @@ func (auth *AuthHandler) Register(c *gin.Context) {
 		"message": "User registered successfully",
 		"token":   tokenString,
 		"user": gin.H{
-			"id":        newUser.ID,
-			"full_name": newUser.FullName,
-			"email":     newUser.Email,
+			"id":            newUser.ID,
+			"full_name":     newUser.FullName,
+			"email":         newUser.Email,
+			"business_name": newUser.BusinessName,
+			"telephone":     newUser.Telephone,
+			"location":      newUser.Location,
 		},
 	})
 }
@@ -216,41 +228,4 @@ func (auth *AuthHandler) VerifyToken(c *gin.Context) {
 func (auth *AuthHandler) checkPassword(providedPassword, storedPassword string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(providedPassword))
 	return err == nil
-}
-
-func (auth *AuthHandler) AuthMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		tokenString := c.GetHeader("Authorization")
-		if tokenString == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
-			c.Abort()
-			return
-		}
-
-		// Remove 'Bearer ' prefix if present
-		if len(tokenString) > 7 && tokenString[:7] == "Bearer " {
-			tokenString = tokenString[7:]
-		}
-
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			return []byte("your-secret-key"), nil
-		})
-
-		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
-			c.Abort()
-			return
-		}
-
-		claims, ok := token.Claims.(jwt.MapClaims)
-		if !ok {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token claims"})
-			c.Abort()
-			return
-		}
-
-		// Add user ID to context
-		c.Set("user_id", uint(claims["user_id"].(float64)))
-		c.Next()
-	}
 }
