@@ -301,12 +301,12 @@ export default function SalesEntry() {
                   required
                   placeholder="254XXXXXXXXX"
                   className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent ${
-                    !formData.customerPhone ? 'border-red-500' : 'border-gray-300'
+                    isSubmitting && !formData.customerPhone ? 'border-red-500' : 'border-gray-300'
                   }`}
                   value={formData.customerPhone}
                   onChange={(e) => handlePhoneChange(e.target.value)}
                 />
-                {!formData.customerPhone && (
+                {isSubmitting && !formData.customerPhone && (
                   <p className="mt-1 text-sm text-red-500">{t('salesEntry.messages.phoneRequired')}</p>
                 )}
               </div>
@@ -316,9 +316,12 @@ export default function SalesEntry() {
                 </label>
                 <input
                   type="text"
-                  readOnly
-                  className="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg"
-                  value={formatCurrency(cartTotal)}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                  value={formData.amount || formatCurrency(cartTotal)}
+                  onChange={(e) => {
+                    const value = parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0;
+                    setFormData(prev => ({ ...prev, amount: value }));
+                  }}
                 />
               </div>
             </div>
