@@ -30,6 +30,8 @@ help:
 	@echo "  install        - Install all dependencies"
 	@echo "  start-ngrok    - Start ngrok and update callback URL"
 	@echo "  create-env     - Create .env file in backend directory"
+	@echo "  check-env      - Check if .env is properly filled"
+	@echo "  start-servers  - Start both servers after env setup"
 
 .PHONY: create-env
 create-env:
@@ -47,9 +49,52 @@ create-env:
 		echo "MPESA_ENVIRONMENT=sandbox" >> $(BACKEND_DIR)/.env; \
 		echo "CALLBACK_URL=http://localhost:8080" >> $(BACKEND_DIR)/.env; \
 		echo ".env file created successfully"; \
+		echo "Please fill in the environment variables in $(BACKEND_DIR)/.env before running the servers"; \
 	else \
 		echo ".env file already exists"; \
 	fi
+
+.PHONY: check-env
+check-env:
+	@echo "Checking if .env file is properly filled..."
+	@if [ ! -f "$(BACKEND_DIR)/.env" ]; then \
+		echo "Error: .env file does not exist. Run 'make create-env' first."; \
+		exit 1; \
+	fi
+	@if grep -q "=$$$\|=$$" "$(BACKEND_DIR)/.env"; then \
+		echo "Error: Some environment variables are not set in .env file."; \
+		echo "Please fill in all variables in $(BACKEND_DIR)/.env"; \
+		exit 1; \
+	fi
+	@echo "Environment variables are properly set."
+
+.PHONY: check-ngrok
+check-ngrok:
+	@if ! command -v ngrok >/dev/null 2>&1; then \
+		echo "Error: ngrok is not installed."; \
+		echo "Please install ngrok from https://ngrok.com/download"; \
+		echo "After installation, run 'make start-servers' again."; \
+		exit 1; \
+	fi
+
+.PHONY: start-ngrok
+start-ngrok: check-ngrok
+	@if ! pgrep -x "ngrok" > /dev/null; then \
+		echo "Starting ngrok..."; \
+		$(NGROK) http 8080 > /dev/null & \
+		sleep 5; \
+		NGROK_URL=$$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'); \
+		echo "Ngrok URL: $$NGROK_URL"; \
+		sed -i.bak "s|CALLBACK_URL=.*|CALLBACK_URL=$$NGROK_URL|" $(BACKEND_DIR)/.env; \
+		echo "Updated CALLBACK_URL in .env"; \
+	else \
+		echo "Ngrok is already running."; \
+	fi
+
+.PHONY: start-servers
+start-servers: check-env check-ngrok
+	@echo "Starting all servers..."
+	make -j 3 start-ngrok run-backend run-frontend
 
 .PHONY: build-backend
 build-backend:
@@ -83,17 +128,3 @@ clean:
 install: create-env
 	cd $(BACKEND_DIR) && go mod download
 	cd $(FRONTEND_DIR) && $(NPM) install
-
-.PHONY: start-ngrok
-start-ngrok:
-	@if ! pgrep -x "ngrok" > /dev/null; then \
-		echo "Starting ngrok..."; \
-		$(NGROK) http 8080 > /dev/null & \
-		sleep 5; \
-		NGROK_URL=$$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'); \
-		echo "Ngrok URL: $$NGROK_URL"; \
-		sed -i.bak "s|CALLBACK_URL=.*|CALLBACK_URL=$$NGROK_URL|" $(BACKEND_DIR)/.env; \
-		echo "Updated CALLBACK_URL in .env"; \
-	else \
-		echo "Ngrok is already running."; \
-	fi
