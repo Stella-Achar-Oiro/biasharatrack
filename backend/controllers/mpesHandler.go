@@ -61,7 +61,8 @@ func (h *MpesaHandler) InitiatePayment(c *gin.Context) {
 		return
 	}
 
-	utils.InfoLogger("Initiating STK push for phone: %s, amount: %.2f", req.PhoneNumber, req.Amount)
+	userID := c.GetUint("userID")
+	utils.InfoLogger("Initiating STK push for user: %d, phone: %s, amount: %.2f", userID, req.PhoneNumber, req.Amount)
 
 	// Log the request for debugging
 	fmt.Printf("Request data: %+v\n", req)
@@ -168,14 +169,15 @@ func (h *MpesaHandler) HandleCallback(c *gin.Context) {
 
 // Add this new endpoint
 func (h *MpesaHandler) GetPaymentStatus(c *gin.Context) {
+	userID := c.GetUint("userID")
 	reference := c.Param("reference")
 
-	utils.InfoLogger("Checking payment status for reference: %s", reference)
+	utils.InfoLogger("Checking payment status for user: %d, reference: %s", userID, reference)
 
 	var transaction models.MpesaTransaction
-	if err := h.db.Where("checkout_request_id = ? OR merchant_request_id = ?",
-		reference, reference).First(&transaction).Error; err != nil {
-		utils.WarningLogger("Transaction not found for reference: %s", reference)
+	if err := h.db.Where("user_id = ? AND (checkout_request_id = ? OR merchant_request_id = ?)",
+		userID, reference, reference).First(&transaction).Error; err != nil {
+		utils.WarningLogger("Transaction not found for user: %d, reference: %s", userID, reference)
 		c.JSON(200, gin.H{
 			"status":  "PENDING",
 			"message": "Payment not yet received",
