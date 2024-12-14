@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
 
 interface User {
+  telephone: any;
+  location: any;
+  business_name: string;
   id: number;
   full_name: string;
   email: string;
@@ -82,6 +85,7 @@ export function useAuth() {
       }
 
       const data: AuthResponse = await response.json();
+      console.log("User data",data);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
