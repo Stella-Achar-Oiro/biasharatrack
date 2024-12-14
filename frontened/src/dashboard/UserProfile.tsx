@@ -11,7 +11,7 @@ interface UserProfileProps {
 export default function UserProfile({ user }: UserProfileProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useTranslation();
-
+  
   return (
     <div className="relative">
       <button
@@ -22,7 +22,7 @@ export default function UserProfile({ user }: UserProfileProps) {
           {user.imageUrl ? (
             <img
               src={user.imageUrl}
-              alt={t('userProfile.imageAlt', { name: user.name })}
+              alt={t('userProfile.imageAlt', { name: user.full_name })}
               className="h-10 w-10 rounded-full object-cover border-2 border-[#2EC4B6]"
             />
           ) : (
@@ -32,7 +32,7 @@ export default function UserProfile({ user }: UserProfileProps) {
           )}
         </div>
         <div className="ml-3 flex-1 min-w-0">
-          <div className="text-sm font-medium truncate">{user.name}</div>
+          <div className="text-sm font-medium truncate">{user.full_name}</div>
           <div className="text-xs text-[#FDFFFC]/70 truncate">{user.email}</div>
         </div>
         <ChevronDown className={`ml-2 h-4 w-4 text-[#FDFFFC]/70 transition-transform ${
@@ -45,7 +45,7 @@ export default function UserProfile({ user }: UserProfileProps) {
           <div className="px-3 py-2 border-b border-[#FDFFFC]/10">
             <div className="text-xs text-[#FDFFFC]/70">{t('userProfile.business')}</div>
             <div className="text-sm font-medium text-[#FDFFFC] truncate">
-              {user.businessName}
+              {user.business_name}
             </div>
           </div>
           <div className="px-3 py-2 border-b border-[#FDFFFC]/10">
