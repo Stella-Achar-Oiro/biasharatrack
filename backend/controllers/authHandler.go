@@ -15,11 +15,11 @@ import (
 )
 
 type AuthHandler struct {
-	db *gorm.DB
+	Db *gorm.DB
 }
 
 func NewAuthHandler(db *gorm.DB) *AuthHandler {
-	return &AuthHandler{db: db}
+	return &AuthHandler{Db: db}
 }
 
 func (auth *AuthHandler) Login(c *gin.Context) {
@@ -42,7 +42,7 @@ func (auth *AuthHandler) Login(c *gin.Context) {
 
 	// Get user from database
 	var user models.User
-	result := auth.db.Where("email = ?", loginRequest.Email).First(&user)
+	result := auth.Db.Where("email = ?", loginRequest.Email).First(&user)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			utils.WarningLogger("Login attempt with non-existent email: %s", loginRequest.Email)
@@ -110,9 +110,17 @@ func (auth *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
+	// Ensure all registration data are present
+	if registerRequest.FullName == "" || registerRequest.Email == "" || registerRequest.Password == "" ||
+		registerRequest.BusinessName == "" || registerRequest.Telephone == "" || registerRequest.Location == "" {
+		utils.WarningLogger("Incomplete registration data: %+v", registerRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "All fields are required"})
+		return
+	}
+
 	// Check if email already exists
 	var existingUser models.User
-	result := auth.db.Where("email = ?", registerRequest.Email).First(&existingUser)
+	result := auth.Db.Where("email = ?", registerRequest.Email).First(&existingUser)
 	if result.Error == nil {
 		utils.WarningLogger("Registration attempt with existing email: %s", registerRequest.Email)
 		c.JSON(http.StatusConflict, gin.H{"error": "Email already registered"})
@@ -141,7 +149,7 @@ func (auth *AuthHandler) Register(c *gin.Context) {
 		Location:     registerRequest.Location,
 	}
 
-	result = auth.db.Create(&newUser)
+	result = auth.Db.Create(&newUser)
 	if result.Error != nil {
 		utils.ErrorLogger("Error creating new user: %v", result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})

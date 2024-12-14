@@ -9,18 +9,18 @@ import (
 )
 
 type CreditManager struct {
-	db *gorm.DB
+	Db *gorm.DB
 }
 
 func NewCreditManager(db *gorm.DB) *CreditManager {
-	return &CreditManager{db: db}
+	return &CreditManager{Db: db}
 }
 
 func (cm *CreditManager) GetCreditsHistory(c *gin.Context) {
 	userID := c.GetUint("userID")
 	var transactions []models.CreditTransaction
 
-	if err := cm.db.Where("user_id = ?", userID).Find(&transactions).Error; err != nil {
+	if err := cm.Db.Where("user_id = ?", userID).Find(&transactions).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching credit transactions"})
 		return
 	}

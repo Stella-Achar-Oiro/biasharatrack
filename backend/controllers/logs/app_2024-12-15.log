@@ -1,0 +1,147 @@
+WARNING: 2024/12/15 00:49:55 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:53:58 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:57:52 log.go:44: Invalid login request: EOF
+WARNING: 2024/12/15 00:57:52 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:57:52 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:57:52 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:57:52 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:57:52 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:58:41 log.go:44: Invalid login request: EOF
+WARNING: 2024/12/15 00:58:41 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:58:41 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:58:41 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:58:41 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 00:58:41 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:00:59 log.go:44: Invalid login request: EOF
+WARNING: 2024/12/15 01:00:59 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:00:59 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:00:59 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:00:59 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:00:59 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:03:02 log.go:44: Invalid login request: EOF
+WARNING: 2024/12/15 01:03:02 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:03:02 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:03:02 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:03:02 log.go:44: Invalid login request: invalid request
+WARNING: 2024/12/15 01:05:31 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:05:31 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:05:31 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:05:31 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:05:31 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:05:31 log.go:44: Invalid registration request: invalid request
+INFO: 2024/12/15 01:09:49 log.go:39: Successfully registered new user: test@example.com
+WARNING: 2024/12/15 01:09:49 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:09:49 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:09:49 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:09:49 log.go:44: Invalid registration request: invalid request
+WARNING: 2024/12/15 01:09:49 log.go:44: Invalid registration request: invalid request
+INFO: 2024/12/15 01:13:25 log.go:39: Successfully registered new user: test@example.com
+INFO: 2024/12/15 01:14:29 log.go:39: Successfully registered new user: test@example.com
+INFO: 2024/12/15 01:14:29 log.go:39: Successfully registered new user: invalid@example.com
+WARNING: 2024/12/15 01:14:29 log.go:44: Registration attempt with existing email: existing@example.com
+INFO: 2024/12/15 01:14:29 log.go:39: Successfully registered new user: error@example.com
+INFO: 2024/12/15 01:14:30 log.go:39: Successfully registered new user: hasherror@example.com
+INFO: 2024/12/15 01:14:30 log.go:39: Successfully registered new user: dberror@example.com
+INFO: 2024/12/15 01:15:41 log.go:39: Successfully registered new user: test@example.com
+WARNING: 2024/12/15 01:15:41 log.go:44: Incomplete registration data: {FullName: Email:invalid@example.com Password:password123 BusinessName: Telephone: Location:}
+WARNING: 2024/12/15 01:15:41 log.go:44: Registration attempt with existing email: existing@example.com
+INFO: 2024/12/15 01:15:41 log.go:39: Successfully registered new user: error@example.com
+INFO: 2024/12/15 01:15:41 log.go:39: Successfully registered new user: hasherror@example.com
+INFO: 2024/12/15 01:15:41 log.go:39: Successfully registered new user: dberror@example.com
+INFO: 2024/12/15 01:16:37 log.go:39: Successfully registered new user: test@example.com
+WARNING: 2024/12/15 01:16:37 log.go:44: Incomplete registration data: {FullName: Email:invalid@example.com Password:password123 BusinessName: Telephone: Location:}
+WARNING: 2024/12/15 01:16:37 log.go:44: Registration attempt with existing email: existing@example.com
+WARNING: 2024/12/15 01:16:37 log.go:44: Registration attempt with existing email: test@example.com
+INFO: 2024/12/15 01:16:37 log.go:39: Successfully registered new user: hasherror@example.com
+INFO: 2024/12/15 01:16:37 log.go:39: Successfully registered new user: dberror@example.com
+INFO: 2024/12/15 01:21:20 log.go:39: Successfully registered new user: test@example.com
+WARNING: 2024/12/15 01:21:20 log.go:44: Incomplete registration data: {FullName: Email:invalid@example.com Password:password123 BusinessName: Telephone: Location:}
+WARNING: 2024/12/15 01:21:20 log.go:44: Registration attempt with existing email: existing@example.com
+WARNING: 2024/12/15 01:21:20 log.go:44: Registration attempt with existing email: test@example.com
+INFO: 2024/12/15 01:21:20 log.go:39: Successfully registered new user: dberror@example.com
+WARNING: 2024/12/15 01:21:20 log.go:44: Incomplete registration data: {FullName:Test User Email:test@example.com Password: BusinessName:Test Business Telephone:1234567890 Location:Test Location}
+WARNING: 2024/12/15 01:21:20 log.go:44: Registration attempt with existing email: test@example.com
+INFO: 2024/12/15 01:24:52 log.go:39: Successfully registered new user: test@example.com
+WARNING: 2024/12/15 01:24:52 log.go:44: Incomplete registration data: {FullName: Email:invalid@example.com Password:password123 BusinessName: Telephone: Location:}
+WARNING: 2024/12/15 01:24:52 log.go:44: Registration attempt with existing email: existing@example.com
+WARNING: 2024/12/15 01:24:52 log.go:44: Registration attempt with existing email: test@example.com
+WARNING: 2024/12/15 01:24:52 log.go:44: Incomplete registration data: {FullName:Test User Email:test@example.com Password: BusinessName:Test Business Telephone:1234567890 Location:Test Location}
+WARNING: 2024/12/15 01:25:38 log.go:44: Incomplete registration data: {FullName:Test User Email:test@example.com Password: BusinessName:Test Business Telephone:1234567890 Location:Test Location}
+INFO: 2024/12/15 01:26:34 log.go:39: Successfully registered new user: test@example.com
+WARNING: 2024/12/15 01:26:34 log.go:44: Incomplete registration data: {FullName: Email:invalid@example.com Password:password123 BusinessName: Telephone: Location:}
+WARNING: 2024/12/15 01:26:34 log.go:44: Registration attempt with existing email: existing@example.com
+WARNING: 2024/12/15 01:26:34 log.go:44: Registration attempt with existing email: test@example.com
+WARNING: 2024/12/15 01:26:34 log.go:44: Incomplete registration data: {FullName:Test User Email:test@example.com Password: BusinessName:Test Business Telephone:1234567890 Location:Test Location}
+WARNING: 2024/12/15 01:27:20 log.go:44: Invalid token verification attempt
+WARNING: 2024/12/15 01:27:20 log.go:44: Invalid token verification attempt
+WARNING: 2024/12/15 01:28:36 log.go:44: Invalid token verification attempt
+WARNING: 2024/12/15 01:28:36 log.go:44: Invalid token verification attempt
+WARNING: 2024/12/15 01:29:05 log.go:44: Invalid token verification attempt
+ERROR: 2024/12/15 01:43:24 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:43:24 log.go:49: Failed to parse multipart form: request Content-Type isn't multipart/form-data
+ERROR: 2024/12/15 01:43:24 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:43:24 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:45:39 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:45:39 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:45:39 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:46:06 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:46:06 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:46:06 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:46:46 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:46:46 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:46:46 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:49:47 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:49:47 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:49:47 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:50:41 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:50:41 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:50:41 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:53:49 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:53:49 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:53:49 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:54:16 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:54:16 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:54:16 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:54:41 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:54:41 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:54:41 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/12/15 01:55:55 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:55:55 log.go:49: Invalid file type uploaded
+ERROR: 2024/12/15 01:55:55 log.go:49: Invalid threshold format: strconv.Atoi: parsing "": invalid syntax
+INFO: 2024/12/15 01:56:56 log.go:39: Successfully marked product 1 as inactive for user 1
+INFO: 2024/12/15 01:56:56 log.go:39: Successfully marked product 1 as inactive for user 1
+ERROR: 2024/12/15 01:56:56 log.go:49: User not authenticated
+INFO: 2024/12/15 01:58:02 log.go:39: Successfully marked product 1 as inactive for user 1
+ERROR: 2024/12/15 01:58:02 log.go:49: User not authenticated
+ERROR: 2024/12/15 01:59:07 log.go:49: User not authenticated
+INFO: 2024/12/15 01:59:07 log.go:39: Successfully fetched all products for user 1
+INFO: 2024/12/15 01:59:07 log.go:39: Successfully fetched all products for user 1
+ERROR: 2024/12/15 01:59:07 log.go:49: Failed to fetch products for user 1: no such table: products
+ERROR: 2024/12/15 02:03:24 log.go:49: User not authenticated
+INFO: 2024/12/15 02:03:24 log.go:39: Successfully fetched all products for user 1
+INFO: 2024/12/15 02:03:24 log.go:39: Successfully fetched all products for user 1
+ERROR: 2024/12/15 02:03:24 log.go:49: Failed to fetch products for user 1: no such table: products
+ERROR: 2024/12/15 02:04:08 log.go:49: User not authenticated
+INFO: 2024/12/15 02:04:08 log.go:39: Successfully fetched all products for user 1
+ERROR: 2024/12/15 02:04:08 log.go:49: Failed to fetch products for user 1: no such table: products
+ERROR: 2024/12/15 02:05:09 log.go:49: User not authenticated
+ERROR: 2024/12/15 02:05:09 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+ERROR: 2024/12/15 02:05:09 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+ERROR: 2024/12/15 02:08:40 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+ERROR: 2024/12/15 02:09:17 log.go:49: User not authenticated
+ERROR: 2024/12/15 02:09:17 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+ERROR: 2024/12/15 02:14:39 log.go:49: User not authenticated
+ERROR: 2024/12/15 02:14:39 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+ERROR: 2024/12/15 02:15:52 log.go:49: User not authenticated
+ERROR: 2024/12/15 02:15:52 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+ERROR: 2024/12/15 02:16:33 log.go:49: User not authenticated
+ERROR: 2024/12/15 02:16:33 log.go:49: Failed to fetch alerts for user 1: no such table: low_stock_alerts
+INFO: 2024/12/15 02:17:17 log.go:39: Searching products with query: Test for user 1
+INFO: 2024/12/15 02:17:17 log.go:39: Searching products with query: Test for user 1
+ERROR: 2024/12/15 02:17:17 log.go:49: Failed to search products for user 1: no such table: products
+INFO: 2024/12/15 02:19:01 log.go:39: Searching products with query: Test for user 1
+INFO: 2024/12/15 02:19:01 log.go:39: Searching products with query: Test for user 1
+ERROR: 2024/12/15 02:19:01 log.go:49: Failed to search products for user 1: no such table: products
+INFO: 2024/12/15 02:20:06 log.go:39: Searching products with query: Test for user 1
+INFO: 2024/12/15 02:20:06 log.go:39: Searching products with query: Test for user 1
+ERROR: 2024/12/15 02:20:06 log.go:49: Failed to search products for user 1: no such table: products

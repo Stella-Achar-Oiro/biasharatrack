@@ -17,11 +17,11 @@ import (
 )
 
 type InventoryManagementHandler struct {
-	db *gorm.DB
+	Db *gorm.DB
 }
 
 func NewInventoryManagementHandler(db *gorm.DB) *InventoryManagementHandler {
-	return &InventoryManagementHandler{db: db}
+	return &InventoryManagementHandler{Db: db}
 }
 
 func (im *InventoryManagementHandler) CreateProduct(c *gin.Context) {
@@ -131,7 +131,7 @@ func (im *InventoryManagementHandler) CreateProduct(c *gin.Context) {
 	}
 
 	// Start transaction
-	tx := im.db.Begin()
+	tx := im.Db.Begin()
 	if tx.Error != nil {
 		utils.ErrorLogger("Failed to start transaction: %v", tx.Error)
 		c.JSON(500, gin.H{"error": "Internal server error"})
@@ -184,7 +184,7 @@ func (im *InventoryManagementHandler) CreateProduct(c *gin.Context) {
 			CreatedAt: time.Now(),
 		}
 
-		if err := im.db.Create(&alert).Error; err != nil {
+		if err := im.Db.Create(&alert).Error; err != nil {
 			utils.ErrorLogger("Failed to create low stock alert: %v", err)
 		}
 	}
@@ -206,7 +206,7 @@ func (im *InventoryManagementHandler) UpdateProduct(c *gin.Context) {
 	}
 
 	// Start transaction
-	tx := im.db.Begin()
+	tx := im.Db.Begin()
 	if tx.Error != nil {
 		utils.ErrorLogger("Failed to start transaction: %v", tx.Error)
 		c.JSON(500, gin.H{"error": "Failed to start transaction"})
@@ -309,7 +309,7 @@ func (im *InventoryManagementHandler) UpdateProduct(c *gin.Context) {
 
 	// Check for low stock alert
 	var inventory models.Inventory
-	if err := im.db.Where("product_id = ? AND user_id = ?", product.ID, userID).First(&inventory).Error; err == nil {
+	if err := im.Db.Where("product_id = ? AND user_id = ?", product.ID, userID).First(&inventory).Error; err == nil {
 		if inventory.Quantity <= inventory.LowStockThreshold {
 			alert := models.LowStockAlert{
 				ProductID: product.ID,
@@ -319,7 +319,7 @@ func (im *InventoryManagementHandler) UpdateProduct(c *gin.Context) {
 				Resolved:  false,
 				CreatedAt: time.Now(),
 			}
-			if err := im.db.Create(&alert).Error; err != nil {
+			if err := im.Db.Create(&alert).Error; err != nil {
 				utils.ErrorLogger("Failed to create low stock alert for user %d: %v", userID, err)
 			}
 		}
@@ -340,7 +340,7 @@ func (im *InventoryManagementHandler) DeleteProduct(c *gin.Context) {
 	}
 
 	// Mark the product as inactive
-	if err := im.db.Model(&models.Product{}).Where("id = ? AND user_id = ?", id, userID).Update("active", false).Error; err != nil {
+	if err := im.Db.Model(&models.Product{}).Where("id = ? AND user_id = ?", id, userID).Update("active", false).Error; err != nil {
 		utils.ErrorLogger("Failed to mark product %s as inactive for user %d: %v", id, userID, err)
 		c.JSON(500, gin.H{"error": "Failed to mark product as inactive"})
 		return
@@ -363,13 +363,13 @@ func (im *InventoryManagementHandler) GetProduct(c *gin.Context) {
 	var product models.Product
 	var inventory models.Inventory
 
-	if err := im.db.Where("id = ? AND user_id = ?", id, userID).First(&product).Error; err != nil {
+	if err := im.Db.Where("id = ? AND user_id = ?", id, userID).First(&product).Error; err != nil {
 		utils.WarningLogger("Product not found for user %d: %v", userID, err)
 		c.JSON(404, gin.H{"error": "Product not found"})
 		return
 	}
 
-	if err := im.db.Where("product_id = ? AND user_id = ?", id, userID).First(&inventory).Error; err != nil {
+	if err := im.Db.Where("product_id = ? AND user_id = ?", id, userID).First(&inventory).Error; err != nil {
 		inventory.Quantity = 0
 	}
 
@@ -394,7 +394,7 @@ func (im *InventoryManagementHandler) GetAllProducts(c *gin.Context) {
 	var products []models.Product
 	var result []gin.H
 
-	if err := im.db.Where("user_id = ?", userID).Find(&products).Error; err != nil {
+	if err := im.Db.Where("user_id = ?", userID).Find(&products).Error; err != nil {
 		utils.ErrorLogger("Failed to fetch products for user %d: %v", userID, err)
 		c.JSON(500, gin.H{"error": "Failed to get products"})
 		return
@@ -402,7 +402,7 @@ func (im *InventoryManagementHandler) GetAllProducts(c *gin.Context) {
 
 	for _, product := range products {
 		var inventory models.Inventory
-		if err := im.db.Where("product_id = ? AND user_id = ?", product.ID, userID).First(&inventory).Error; err != nil {
+		if err := im.Db.Where("product_id = ? AND user_id = ?", product.ID, userID).First(&inventory).Error; err != nil {
 			inventory.Quantity = 0
 		}
 
@@ -451,13 +451,13 @@ func (im *InventoryManagementHandler) GetLowStockAlerts(c *gin.Context) {
 	}
 
 	// Using MySQL compatible syntax
-	if err := im.db.Table("low_stock_alerts").
+	if err := im.Db.Table("low_stock_alerts").
 		Select("low_stock_alerts.*, products.name as product_name, inventory.quantity as current_quantity, inventory.low_stock_threshold as stock_threshold").
 		Joins("JOIN products ON low_stock_alerts.product_id = products.id").
 		Joins("JOIN inventory ON products.id = inventory.product_id").
 		Where("low_stock_alerts.user_id = ?", userID).
 		Where("low_stock_alerts.id IN (?)",
-			im.db.Table("low_stock_alerts").
+			im.Db.Table("low_stock_alerts").
 				Select("MAX(id)").
 				Group("product_id")).
 		Find(&alerts).Error; err != nil {
@@ -536,7 +536,7 @@ func (im *InventoryManagementHandler) SearchProducts(c *gin.Context) {
 		models.Product
 		Quantity int `json:"quantity"`
 	}
-	err := im.db.Table("products").
+	err := im.Db.Table("products").
 		Select("products.*, inventory.quantity").
 		Joins("left join inventory on inventory.product_id = products.id").
 		Where("products.user_id = ?", userID).
@@ -560,7 +560,7 @@ func (im *InventoryManagementHandler) GetProducts(c *gin.Context) {
 	}
 
 	var products []models.Product
-	if err := im.db.Where("user_id = ?", userID).Find(&products).Error; err != nil {
+	if err := im.Db.Where("user_id = ?", userID).Find(&products).Error; err != nil {
 		c.JSON(500, gin.H{"error": "Failed to fetch products"})
 		return
 	}
