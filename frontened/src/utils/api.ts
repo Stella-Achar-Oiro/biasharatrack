@@ -1,6 +1,6 @@
 import { Product } from "../types/inventory";
 import { StockAlert } from "../types/inventory";
-import { SaleFormData, SalesTransaction } from "../types/sales";
+import { SaleFormData, SalesMetrics, SalesTransaction } from "../types/sales";
 import { CreditCustomer } from "../types/credits";
 
 const API_URL = 'http://localhost:8080';
@@ -179,7 +179,6 @@ export const inventoryApi = {
 
   recordSale: async (saleData: SaleFormData): Promise<ApiResponse<null>> => {
     try {
-      console.log("saleData====>",saleData);
       const response = await fetch(`${API_URL}/record-sale`, {
         method: 'POST',
         headers: {
@@ -248,4 +247,52 @@ export const inventoryApi = {
       };
     }
   }
+  ,
+
+  fetchReceipts: async (): Promise<ApiResponse<any[]>> => {
+    try {
+      const response = await fetch(`${API_URL}/get-all-receipts`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch receipts');
+      }
+
+      return {
+        success: true,
+        data: data
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'An unknown error occurred'
+      };
+    }
+  }
+  ,
+
+  fetchSalesMetrics: async (): Promise<ApiResponse<SalesMetrics>> => {
+    try {
+      console.log("Fetching sales metrics");
+      const response = await fetch(`${API_URL}/sales-metrics`);
+      const data = await response.json();
+     
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch sales metrics');
+      }
+
+      return {
+        success: true,
+        data: data as SalesMetrics
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'An unknown error occurred'
+      };
+    }
+  }
 };
+export type { SalesMetrics };
+

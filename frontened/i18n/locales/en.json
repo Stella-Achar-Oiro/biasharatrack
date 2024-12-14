@@ -28,7 +28,9 @@
   "userProfile": {
     "business": "Business",
     "accountSettings": "Account Settings",
-    "imageAlt": "Profile picture of {{name}}"
+    "imageAlt": "Profile picture of {{name}}",
+    "location": "Location",
+    "telephone": "Telephone"
   },
   "creditMetrics": {
     "totalOutstanding": "Total Outstanding",
@@ -136,6 +138,7 @@
     "messages": {
       "selectProduct": "Please select a product and enter a valid quantity",
       "addProduct": "Please add at least one product",
+      "processingAdding": "Adding product...",
       "success": "Sale recorded successfully!",
       "error": "Failed to record sale. Please try again.",
       "stockLimit": "Only {quantity} units available in stock",
@@ -284,6 +287,7 @@
       "sales": "Sales",
       "analytics": "Analytics",
       "credit": "Credit",
+      "receipts": "Receipts",
       "reports": "Reports",
       "tutorials": "Tutorials",
       "settings": "Settings",
@@ -296,6 +300,32 @@
     },
     "sidebar": {
       "openSidebar": "Open sidebar"
+    }
+  },
+  "receipts": {
+    "title": "Receipts",
+    "metrics": {
+      "totalRevenue": "Total Revenue",
+      "totalReceipts": "Total Receipts",
+      "averageAmount": "Average Amount",
+      "recentReceipts": "Recent Receipts"
+    },
+    "search": "Search receipts...",
+    "filters": {
+      "all": "All Payment Methods",
+      "cash": "Cash",
+      "mpesa": "M-PESA",
+      "credit": "Credit"
+    },
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "table": {
+      "receiptNumber": "Receipt Number",
+      "date": "Date",
+      "customer": "Customer",
+      "amount": "Amount",
+      "payment": "Payment Method",
+      "actions": "Actions"
     }
   },
   "hero": {
@@ -391,8 +421,19 @@
       "title": "Create your account",
       "haveAccount": "Already have an account?",
       "loginLink": "Sign in",
-      "submit": "Create account",
-      "imageAlt": "Kenyan Market Vendor"
-    }
+      "submit": "Sign up"
+    },
+    "businessName": "Business Name",
+    "businessNamePlaceholder": "Enter your business name",
+    "telephone": "Phone Number",
+    "telephonePlaceholder": "Enter your phone number",
+    "location": "Business Location",
+    "locationPlaceholder": "Enter your business location"
+  },
+  "common": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of"
   }
 }
