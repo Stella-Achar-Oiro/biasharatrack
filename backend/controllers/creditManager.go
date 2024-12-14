@@ -17,9 +17,10 @@ func NewCreditManager(db *gorm.DB) *CreditManager {
 }
 
 func (cm *CreditManager) GetCreditsHistory(c *gin.Context) {
+	userID := c.GetUint("userID")
 	var transactions []models.CreditTransaction
 
-	if err := cm.db.Find(&transactions).Error; err != nil {
+	if err := cm.db.Where("user_id = ?", userID).Find(&transactions).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching credit transactions"})
 		return
 	}
