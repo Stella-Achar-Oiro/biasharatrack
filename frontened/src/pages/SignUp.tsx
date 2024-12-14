@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, Package, Phone, MapPin } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +8,9 @@ export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [telephone, setTelephone] = useState('');
+  const [location, setLocation] = useState('');
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { register, error } = useAuth();
@@ -15,10 +18,16 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await register({ fullName: name, email, password });
+      await register({ 
+        fullName: name, 
+        email, 
+        password,
+        businessName,
+        telephone,
+        location
+      });
       navigate('/dashboard');
     } catch (err) {
-      // Error is handled by AuthContext
       console.error('Registration failed:', err);
     }
   };
@@ -70,7 +79,70 @@ export default function SignUp() {
                 </div>
               </div>
 
+              
+
               <div>
+                <label htmlFor="businessName" className="block text-sm font-medium text-[#011627]">
+                  {t('auth.businessName')}
+                </label>
+                <div className="mt-1 relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Package className="h-5 w-5 text-[#011627]/40" />
+                  </div>
+                  <input
+                    id="businessName"
+                    type="text"
+                    required
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                    placeholder={t('auth.businessNamePlaceholder')}
+                    value={businessName}
+                    onChange={(e) => setBusinessName(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="telephone" className="block text-sm font-medium text-[#011627]">
+                  {t('auth.telephone')}
+                </label>
+                <div className="mt-1 relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Phone className="h-5 w-5 text-[#011627]/40" />
+                  </div>
+                  <input
+                    id="telephone"
+                    type="tel"
+                    required
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                    placeholder={t('auth.telephonePlaceholder')}
+                    value={telephone}
+                    onChange={(e) => setTelephone(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="location" className="block text-sm font-medium text-[#011627]">
+                  {t('auth.location')}
+                </label>
+                <div className="mt-1 relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <MapPin className="h-5 w-5 text-[#011627]/40" />
+                  </div>
+                  <input
+                    id="location"
+                    type="text"
+                    required
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                    placeholder={t('auth.locationPlaceholder')}
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
                 <label htmlFor="email" className="block text-sm font-medium text-[#011627]">
                 {t('auth.email')}
                 </label>
@@ -109,7 +181,6 @@ export default function SignUp() {
                   />
                 </div>
               </div>
-            </div>
 
             <div>
               <button
