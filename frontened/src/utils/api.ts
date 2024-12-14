@@ -4,7 +4,8 @@ import { SaleFormData, SalesMetrics, SalesTransaction } from "../types/sales";
 import { CreditCustomer } from "../types/credits";
 import { authFetch } from './auth';
 
-export const API_URL = 'http://localhost:8080';
+// Update the API_URL to use environment variable with fallback
+export const API_URL = import.meta.env.VITE_API_URL || 'https://biasharatrack-backend.onrender.com';
 
 interface ApiResponse<T> {
   success: boolean;
@@ -45,8 +46,7 @@ export const inventoryApi = {
         formData.append('image', data.image, data.image.name);
       }
 
-      
-      const response = await authFetch(`/create-product`, {
+      const response = await authFetch(`${API_URL}/create-product`, {
         method: 'POST',
         body: formData,
       });
@@ -72,7 +72,7 @@ export const inventoryApi = {
 
   getAllProducts: async (): Promise<ApiResponse<ProductResponse[]>> => {
     try {
-      const response = await authFetch(`/get-all-products`);
+      const response = await authFetch(`${API_URL}/get-all-products`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -93,7 +93,7 @@ export const inventoryApi = {
 
   getProduct: async (id: number): Promise<ApiResponse<Product>> => {
     try {
-      const response = await authFetch(`/get-product/${id}`);
+      const response = await authFetch(`${API_URL}/get-product/${id}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -110,12 +110,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   getLowStockAlerts: async (): Promise<ApiResponse<StockAlert[]>> => {
     try {
-      const response = await authFetch(`/get-low-stock-alerts`);
+      const response = await authFetch(`${API_URL}/get-low-stock-alerts`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -132,12 +131,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   lookupBarcode: async (barcode: string): Promise<ApiResponse<Product | null>> => {
     try {
-      const response = await authFetch(`/lookup-barcode?barcode=${barcode}`);
+      const response = await authFetch(`${API_URL}/lookup-barcode?barcode=${barcode}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -154,12 +152,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   searchProducts: async (query: string): Promise<ApiResponse<Product[]>> => {
     try {
-      const response = await authFetch(`/search-products?q=${query}`);
+      const response = await authFetch(`${API_URL}/search-products?q=${query}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -176,12 +173,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   recordSale: async (saleData: SaleFormData): Promise<ApiResponse<null>> => {
     try {
-      const response = await authFetch(`/record-sale`, {
+      const response = await authFetch(`${API_URL}/record-sale`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -204,12 +200,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   fetchSalesHistory: async (): Promise<ApiResponse<SalesTransaction[]>> => {
     try {
-      const response = await authFetch(`/sales-history`);
+      const response = await authFetch(`${API_URL}/sales-history`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -226,12 +221,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   fetchCreditHistory: async (): Promise<ApiResponse<CreditCustomer[]>> => {
     try {
-      const response = await authFetch(`/credit-history`);
+      const response = await authFetch(`${API_URL}/credit-history`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -248,12 +242,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   fetchReceipts: async (): Promise<ApiResponse<any[]>> => {
     try {
-      const response = await authFetch(`/get-all-receipts`);
+      const response = await authFetch(`${API_URL}/get-all-receipts`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -270,15 +263,13 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   fetchSalesMetrics: async (): Promise<ApiResponse<SalesMetrics>> => {
     try {
       console.log("Fetching sales metrics");
-      const response = await authFetch(`/sales-metrics`);
+      const response = await authFetch(`${API_URL}/sales-metrics`);
       const data = await response.json();
-     
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to fetch sales metrics');
@@ -294,12 +285,11 @@ export const inventoryApi = {
         error: error instanceof Error ? error.message : 'An unknown error occurred'
       };
     }
-  }
-  ,
+  },
 
   deleteProduct: async (productId: string): Promise<ApiResponse<null>> => {
     try {
-      const response = await authFetch(`/delete-product/${productId}`, {
+      const response = await authFetch(`${API_URL}/delete-product/${productId}`, {
         method: 'DELETE',
       });
 
@@ -320,5 +310,5 @@ export const inventoryApi = {
     }
   }
 };
-export type { SalesMetrics };
 
+export type { SalesMetrics };
