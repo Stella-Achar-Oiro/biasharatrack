@@ -70,7 +70,7 @@ func (im *SalesManagementHandler) SellProducts(c *gin.Context) {
 		return
 	}
 
-	// validate payment method and sale type
+	// Validate payment method and sale type
 	if saleData.PaymentMethod == "" {
 		utils.ErrorLogger("Incomplete sale request in payment method or sale type")
 		c.JSON(400, gin.H{"error": "Payment method is required"})
@@ -86,12 +86,20 @@ func (im *SalesManagementHandler) SellProducts(c *gin.Context) {
 		}
 	}
 
-	utils.InfoLogger("Processing sale for product %s", saleData.PaymentMethod)
+	// Get user ID from context (assuming it's set during authentication)
+	userID := c.GetUint("userID")
+	if userID == 0 {
+		utils.ErrorLogger("User not authenticated")
+		c.JSON(401, gin.H{"error": "Unauthorized"})
+		return
+	}
 
-	processSales(saleData, im, c)
+	utils.InfoLogger("Processing sale for user %d with payment method %s", userID, saleData.PaymentMethod)
+
+	processSales(saleData, userID, im, c)
 }
 
-func processSales(saleData SaleData, im *SalesManagementHandler, c *gin.Context) {
+func processSales(saleData SaleData, userID uint, im *SalesManagementHandler, c *gin.Context) {
 	// Start transaction
 	tx := im.db.Begin()
 	if tx.Error != nil {
@@ -107,6 +115,7 @@ func processSales(saleData SaleData, im *SalesManagementHandler, c *gin.Context)
 
 	// Create receipt
 	receipt := models.Receipt{
+		UserID:        userID,
 		ReceiptNumber: generateReceiptNumber(),
 		CustomerName:  saleData.CustomerName,
 		Date:          time.Now(),
@@ -127,14 +136,14 @@ func processSales(saleData SaleData, im *SalesManagementHandler, c *gin.Context)
 		// Get current inventory and product
 		var inventory models.Inventory
 		var product models.Product
-		if err := tx.Where("product_id = ?", sellRequest.ProductID).First(&inventory).Error; err != nil {
+		if err := tx.Where("product_id = ? AND user_id = ?", sellRequest.ProductID, userID).First(&inventory).Error; err != nil {
 			tx.Rollback()
 			utils.ErrorLogger("Product not found in inventory: product_id= %d %v", sellRequest.ProductID, err)
 			c.JSON(404, gin.H{"error": fmt.Sprintf("Product %d not found in inventory", sellRequest.ProductID)})
 			return
 		}
 
-		if err := tx.First(&product, sellRequest.ProductID).Error; err != nil {
+		if err := tx.Where("id = ? AND user_id = ?", sellRequest.ProductID, userID).First(&product).Error; err != nil {
 			tx.Rollback()
 			utils.ErrorLogger("Product not found: product_id= %d %v", sellRequest.ProductID, err)
 			c.JSON(404, gin.H{"error": fmt.Sprintf("Product %d not found", sellRequest.ProductID)})
@@ -199,6 +208,7 @@ func processSales(saleData SaleData, im *SalesManagementHandler, c *gin.Context)
 		// Handle credit sale
 		if strings.ToUpper(saleData.PaymentMethod) == "CREDIT" {
 			creditTx := models.CreditTransaction{
+				UserID:       userID,
 				ProductID:    sellRequest.ProductID,
 				Name:         saleData.CustomerName,
 				PhoneNumber:  saleData.CustomerPhone,
@@ -218,6 +228,7 @@ func processSales(saleData SaleData, im *SalesManagementHandler, c *gin.Context)
 
 		// Record sales transaction
 		salesTransaction := models.SalesTransaction{
+			UserID:          userID,
 			ProductID:       sellRequest.ProductID,
 			Quantity:        sellRequest.Quantity,
 			TotalAmount:     sellRequest.Amount,
@@ -273,6 +284,13 @@ func processSales(saleData SaleData, im *SalesManagementHandler, c *gin.Context)
 
 // Fetch sales history
 func (im *SalesManagementHandler) FetchSalesHistory(c *gin.Context) {
+	userID := c.GetUint("userID")
+	if userID == 0 {
+		utils.ErrorLogger("User not authenticated")
+		c.JSON(401, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	var salesTransactions []struct {
 		models.SalesTransaction
 		ProductName string `json:"product_name"`
@@ -281,6 +299,7 @@ func (im *SalesManagementHandler) FetchSalesHistory(c *gin.Context) {
 	if err := im.db.Table("sales_transactions").
 		Select("sales_transactions.*, products.name as product_name").
 		Joins("JOIN products ON sales_transactions.product_id = products.id").
+		Where("sales_transactions.user_id = ?", userID).
 		Find(&salesTransactions).Error; err != nil {
 		utils.ErrorLogger("Failed to fetch sales history: %v", err)
 		c.JSON(500, gin.H{"error": "Failed to fetch sales history"})
@@ -293,6 +312,13 @@ func (im *SalesManagementHandler) FetchSalesHistory(c *gin.Context) {
 
 // GetSalesMetrics returns sales metrics including daily, weekly and monthly revenue
 func (im *SalesManagementHandler) FetchSalesMetrics(c *gin.Context) {
+	userID := c.GetUint("userID")
+	if userID == 0 {
+		utils.ErrorLogger("User not authenticated")
+		c.JSON(401, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	now := time.Now()
 	startOfDay := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 	startOfWeek := now.AddDate(0, 0, -int(now.Weekday()))
@@ -301,7 +327,7 @@ func (im *SalesManagementHandler) FetchSalesMetrics(c *gin.Context) {
 	// Get daily revenue
 	var dailyRevenue float64
 	if err := im.db.Model(&models.SalesTransaction{}).
-		Where("created_at >= ?", startOfDay).
+		Where("user_id = ? AND created_at >= ?", userID, startOfDay).
 		Select("COALESCE(SUM(total_amount), 0)").
 		Scan(&dailyRevenue).Error; err != nil {
 		utils.ErrorLogger("Failed to fetch daily revenue: %v", err)
@@ -312,7 +338,7 @@ func (im *SalesManagementHandler) FetchSalesMetrics(c *gin.Context) {
 	// Get weekly revenue
 	var weeklyRevenue float64
 	if err := im.db.Model(&models.SalesTransaction{}).
-		Where("created_at >= ?", startOfWeek).
+		Where("user_id = ? AND created_at >= ?", userID, startOfWeek).
 		Select("COALESCE(SUM(total_amount), 0)").
 		Scan(&weeklyRevenue).Error; err != nil {
 		utils.ErrorLogger("Failed to fetch weekly revenue: %v", err)
@@ -323,7 +349,7 @@ func (im *SalesManagementHandler) FetchSalesMetrics(c *gin.Context) {
 	// Get monthly revenue
 	var monthlyRevenue float64
 	if err := im.db.Model(&models.SalesTransaction{}).
-		Where("created_at >= ?", startOfMonth).
+		Where("user_id = ? AND created_at >= ?", userID, startOfMonth).
 		Select("COALESCE(SUM(total_amount), 0)").
 		Scan(&monthlyRevenue).Error; err != nil {
 		utils.ErrorLogger("Failed to fetch monthly revenue: %v", err)
@@ -338,7 +364,7 @@ func (im *SalesManagementHandler) FetchSalesMetrics(c *gin.Context) {
 		Credit float64
 	}
 	if err := im.db.Model(&models.SalesTransaction{}).
-		Where("created_at >= ?", startOfMonth).
+		Where("user_id = ? AND created_at >= ?", userID, startOfMonth).
 		Select(`
 			COALESCE(SUM(CASE WHEN payment_method = 'cash' THEN total_amount ELSE 0 END), 0) as cash,
 			COALESCE(SUM(CASE WHEN payment_method = 'mpesa' THEN total_amount ELSE 0 END), 0) as mpesa,
@@ -360,7 +386,7 @@ func (im *SalesManagementHandler) FetchSalesMetrics(c *gin.Context) {
 	if err := im.db.Table("sales_transactions").
 		Select("products.name as product_name, SUM(sales_transactions.quantity) as quantity, SUM(sales_transactions.total_amount) as revenue").
 		Joins("JOIN products ON sales_transactions.product_id = products.id").
-		Where("sales_transactions.created_at >= ?", startOfMonth).
+		Where("sales_transactions.user_id = ? AND sales_transactions.created_at >= ?", userID, startOfMonth).
 		Group("products.id, products.name").
 		Order("revenue DESC").
 		Limit(1).
