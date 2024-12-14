@@ -38,7 +38,6 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
   const headers = {
     ...options.headers,
     'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json',
   };
 
   console.log('Request Headers:', headers);
