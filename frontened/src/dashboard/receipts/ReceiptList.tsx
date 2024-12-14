@@ -163,18 +163,18 @@ export default function ReceiptList() {
               <option value="mpesa">{t('receipts.filters.mpesa')}</option>
               <option value="credit">{t('receipts.filters.credit')}</option>
             </select>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col md:flex-row items-center gap-2">
               <DatePicker
                 selected={startDate}
                 onChange={setStartDate}
                 placeholderText={t('receipts.startDate')}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
               />
               <DatePicker
                 selected={endDate}
                 onChange={setEndDate}
                 placeholderText={t('receipts.endDate')}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
               />
             </div>
           </div>
