@@ -2,8 +2,9 @@ import { Product } from "../types/inventory";
 import { StockAlert } from "../types/inventory";
 import { SaleFormData, SalesMetrics, SalesTransaction } from "../types/sales";
 import { CreditCustomer } from "../types/credits";
+import { authFetch } from './auth';
 
-const API_URL = 'http://localhost:8080';
+export const API_URL = 'http://localhost:8080';
 
 interface ApiResponse<T> {
   success: boolean;
@@ -44,7 +45,8 @@ export const inventoryApi = {
         formData.append('image', data.image, data.image.name);
       }
 
-      const response = await fetch(`${API_URL}/create-product`, {
+      
+      const response = await authFetch(`/create-product`, {
         method: 'POST',
         body: formData,
       });
@@ -70,7 +72,7 @@ export const inventoryApi = {
 
   getAllProducts: async (): Promise<ApiResponse<ProductResponse[]>> => {
     try {
-      const response = await fetch(`${API_URL}/get-all-products`);
+      const response = await authFetch(`/get-all-products`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -91,7 +93,7 @@ export const inventoryApi = {
 
   getProduct: async (id: number): Promise<ApiResponse<Product>> => {
     try {
-      const response = await fetch(`${API_URL}/get-product/${id}`);
+      const response = await authFetch(`/get-product/${id}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -113,7 +115,7 @@ export const inventoryApi = {
 
   getLowStockAlerts: async (): Promise<ApiResponse<StockAlert[]>> => {
     try {
-      const response = await fetch(`${API_URL}/get-low-stock-alerts`);
+      const response = await authFetch(`/get-low-stock-alerts`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -135,7 +137,7 @@ export const inventoryApi = {
 
   lookupBarcode: async (barcode: string): Promise<ApiResponse<Product | null>> => {
     try {
-      const response = await fetch(`${API_URL}/lookup-barcode?barcode=${barcode}`);
+      const response = await authFetch(`/lookup-barcode?barcode=${barcode}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -157,7 +159,7 @@ export const inventoryApi = {
 
   searchProducts: async (query: string): Promise<ApiResponse<Product[]>> => {
     try {
-      const response = await fetch(`${API_URL}/search-products?q=${query}`);
+      const response = await authFetch(`/search-products?q=${query}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -179,7 +181,7 @@ export const inventoryApi = {
 
   recordSale: async (saleData: SaleFormData): Promise<ApiResponse<null>> => {
     try {
-      const response = await fetch(`${API_URL}/record-sale`, {
+      const response = await authFetch(`/record-sale`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -207,7 +209,7 @@ export const inventoryApi = {
 
   fetchSalesHistory: async (): Promise<ApiResponse<SalesTransaction[]>> => {
     try {
-      const response = await fetch(`${API_URL}/sales-history`);
+      const response = await authFetch(`/sales-history`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -229,7 +231,7 @@ export const inventoryApi = {
 
   fetchCreditHistory: async (): Promise<ApiResponse<CreditCustomer[]>> => {
     try {
-      const response = await fetch(`${API_URL}/credit-history`);
+      const response = await authFetch(`/credit-history`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -251,7 +253,7 @@ export const inventoryApi = {
 
   fetchReceipts: async (): Promise<ApiResponse<any[]>> => {
     try {
-      const response = await fetch(`${API_URL}/get-all-receipts`);
+      const response = await authFetch(`/get-all-receipts`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -274,7 +276,7 @@ export const inventoryApi = {
   fetchSalesMetrics: async (): Promise<ApiResponse<SalesMetrics>> => {
     try {
       console.log("Fetching sales metrics");
-      const response = await fetch(`${API_URL}/sales-metrics`);
+      const response = await authFetch(`/sales-metrics`);
       const data = await response.json();
      
 

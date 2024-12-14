@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/OAthooh/BiasharaTrack.git/controllers"
+	"github.com/OAthooh/BiasharaTrack.git/middleware"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -10,7 +11,14 @@ import (
 func AuthRoutes(router *gin.Engine, db *gorm.DB) {
 	auth := controllers.NewAuthHandler(db)
 
+	// Public routes
 	router.POST("/login", auth.Login)
 	router.POST("/register", auth.Register)
-	router.GET("/verify-token", auth.VerifyToken)
+
+	// Protected routes
+	authenticated := router.Group("/")
+	authenticated.Use(middleware.AuthMiddleware())
+	{
+		authenticated.GET("/verify-token", auth.VerifyToken)
+	}
 }

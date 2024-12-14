@@ -1,14 +1,17 @@
 import { useState, useCallback } from 'react';
+import { API_URL } from './api';
 
-interface User {
-  telephone: any;
-  location: any;
-  business_name: string;
-  id: number;
-  full_name: string;
+export interface User {
+  id: string;
+  name: string;
   email: string;
+  imageUrl?: string;
+  role: 'owner' | 'manager' | 'staff';
+  businessName: string;
+  telephone: string;
+  location: string;
+  token: string;
 }
-
 interface LoginCredentials {
   email: string;
   password: string;
@@ -26,24 +29,62 @@ interface AuthResponse {
   user: User;
 }
 
-export function useAuth() {
+export const authFetch = async (url: string, options: RequestInit = {}) => {
+  const token = localStorage.getItem('token');
+
+  console.log('Token:', token);
+  console.log('URL:', url);
+
+  const headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  console.log('Request Headers:', headers);
+  console.log('Request Options:', options);
+
+  try {
+    const response = await fetch(`${API_URL}${url}`, {
+      ...options,
+      headers,
+    });
+  
+    console.log('Response Status:', response.status);
+    console.log('Response Headers:', response.headers);
+  
+    if (response.status === 401) {
+      console.log('Unauthorized access detected');
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+      throw new Error('Unauthorized');
+    }
+
+    const responseData = await response.clone().json();
+    console.log('Response Data:', responseData);
+
+    return response;
+  } catch (error) {
+    console.error('Fetch Error:', error);
+    throw error;
+  }
+};
+export function useAuthState() {
   const [user, setUser] = useState<User | null>(null);
   // Changed initial loading to false since we're not doing any initial fetch
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = 'http://localhost:8080';
+  
+
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     try {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`${API_URL}/login`, {
+      const response = await authFetch('/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(credentials),
       });
   
@@ -71,11 +112,8 @@ export function useAuth() {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`${API_URL}/register`, {
+      const response = await authFetch('/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(credentials),
       });
 
@@ -115,12 +153,7 @@ export function useAuth() {
 
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/verify-token`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await authFetch('/verify-token');
 
       if (!response.ok) {
         throw new Error('Token verification failed');

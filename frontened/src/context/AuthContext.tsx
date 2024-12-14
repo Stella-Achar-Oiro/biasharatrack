@@ -1,5 +1,5 @@
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { useAuth as useAuthHook } from '../utils/auth';
+import { useAuthState } from '../utils/auth';
 import { User } from '../../types/user';  // Import the User interface
 
 interface RegisterData {
@@ -20,9 +20,10 @@ interface AuthContextType {
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   checkAuth: () => void;
+  getToken: () => string | null;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [initialized, setInitialized] = useState(false);
@@ -34,42 +35,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     register,
     logout,
     checkAuth
-  } = useAuthHook();
+  } = useAuthState();
+
+  const getToken = () => localStorage.getItem('token');
 
   useEffect(() => {
-    const initAuth = async () => {
-      await checkAuth();
-      setInitialized(true);
-    };
-    initAuth();
+    const token = getToken();
+    if (token) {
+      checkAuth();
+    }
+    setInitialized(true);
   }, [checkAuth]);
 
-  if (!initialized || loading) {
-    return <div>Loading...</div>;
-  }
+  const value = {
+    isAuthenticated: !!user,
+    user,
+    loading,
+    error,
+    login,
+    register,
+    logout,
+    checkAuth,
+    getToken
+  };
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        isAuthenticated: !!user,
-        user: user ? {
-          id: String(user.id),
-          name: user.full_name || '',
-          email: user.email,
-          role: 'owner',
-          businessName: user.business_name,
-          telephone: user.telephone,
-          location: user.location,
-          imageUrl: ''
-          } : null,
-        loading,
-        error,
-        login,
-        register,
-        logout,
-        checkAuth
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,10 +1,10 @@
 package models
 
-
 import "time"
 
 type Receipt struct {
 	ID            uint      `json:"id" gorm:"primaryKey"`
+	UserID        uint      `json:"userId" gorm:"not null"` // Added UserID to associate receipt with a user
 	ReceiptNumber string    `json:"receiptNumber" gorm:"unique;not null"`
 	CustomerName  string    `json:"customerName"`
 	Date          time.Time `json:"date"`
@@ -13,7 +13,6 @@ type Receipt struct {
 	Items         []Item    `json:"items" gorm:"foreignKey:ReceiptID"`
 	CreatedAt     time.Time `json:"createdAt"`
 	UpdatedAt     time.Time `json:"updatedAt"`
-	
 }
 
 type Item struct {

@@ -4,6 +4,8 @@ import "time"
 
 type Product struct {
 	ID          uint      `gorm:"primaryKey" json:"id"`
+	UserID      uint      `gorm:"not null" json:"user_id"`
+	User        User      `gorm:"foreignKey:UserID" json:"-"`
 	Name        string    `gorm:"not null" json:"name"`
 	Description string    `gorm:"type:text" json:"description,omitempty"`
 	Category    string    `json:"category,omitempty"`
@@ -16,6 +18,8 @@ type Product struct {
 
 type Inventory struct {
 	ID                uint      `gorm:"primaryKey" json:"id"`
+	UserID            uint      `gorm:"not null" json:"user_id"`
+	User              User      `gorm:"foreignKey:UserID" json:"-"`
 	ProductID         uint      `gorm:"not null" json:"product_id"`
 	Product           Product   `gorm:"foreignKey:ProductID" json:"-"`
 	Quantity          int       `gorm:"not null;default:0" json:"quantity"`
@@ -30,6 +34,8 @@ func (Inventory) TableName() string {
 
 type StockMovement struct {
 	ID             uint      `gorm:"primaryKey" json:"id"`
+	UserID         uint      `gorm:"not null" json:"user_id"`
+	User           User      `gorm:"foreignKey:UserID" json:"-"`
 	ProductID      uint      `gorm:"not null" json:"product_id"`
 	Product        Product   `gorm:"foreignKey:ProductID" json:"-"`
 	ChangeType     string    `gorm:"type:enum('SALE','PURCHASE','ADJUSTMENT');not null" json:"change_type"`
@@ -40,6 +46,8 @@ type StockMovement struct {
 
 type LowStockAlert struct {
 	ID           uint      `gorm:"primaryKey" json:"id"`
+	UserID       uint      `gorm:"not null" json:"user_id"`
+	User         User      `gorm:"foreignKey:UserID" json:"-"`
 	ProductID    uint      `gorm:"not null" json:"product_id"`
 	Product      Product   `gorm:"foreignKey:ProductID" json:"-"`
 	AlertMessage string    `gorm:"type:text;not null" json:"alert_message"`
@@ -49,6 +57,8 @@ type LowStockAlert struct {
 
 type Category struct {
 	ID          uint      `gorm:"primaryKey" json:"id"`
+	UserID      uint      `gorm:"not null" json:"user_id"`
+	User        User      `gorm:"foreignKey:UserID" json:"-"`
 	Name        string    `gorm:"unique;not null" json:"name"`
 	Description string    `gorm:"type:text" json:"description,omitempty"`
 	CreatedAt   time.Time `gorm:"autoCreateTime" json:"created_at"`

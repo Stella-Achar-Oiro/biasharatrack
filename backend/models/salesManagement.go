@@ -4,6 +4,8 @@ import "time"
 
 type SalesTransaction struct {
 	ID              uint      `gorm:"primaryKey" json:"id"`
+	UserID          uint      `gorm:"not null" json:"user_id"`
+	User            User      `gorm:"foreignKey:UserID" json:"-"`
 	ProductID       uint      `gorm:"not null" json:"product_id"`
 	Product         Product   `gorm:"foreignKey:ProductID" json:"-"`
 	Quantity        int       `gorm:"not null" json:"quantity"`

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/OAthooh/BiasharaTrack.git/controllers"
+	"github.com/OAthooh/BiasharaTrack.git/middleware"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -9,7 +10,11 @@ import (
 func SalesManagementRoutes(router *gin.Engine, db *gorm.DB) {
 	sm := controllers.NewSalesManagementHandler(db)
 
-	router.POST("/record-sale", sm.SellProducts)
-	router.GET("/sales-history", sm.FetchSalesHistory)
-	router.GET("/sales-metrics", sm.FetchSalesMetrics)
+	authenticated := router.Group("/")
+	authenticated.Use(middleware.AuthMiddleware())
+	{
+		authenticated.POST("/record-sale", sm.SellProducts)
+		authenticated.GET("/sales-history", sm.FetchSalesHistory)
+		authenticated.GET("/sales-metrics", sm.FetchSalesMetrics)
+	}
 }

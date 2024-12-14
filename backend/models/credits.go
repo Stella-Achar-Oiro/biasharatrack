@@ -13,6 +13,8 @@ type CreditCustomer struct {
 }
 type CreditTransaction struct {
 	ID           uint      `gorm:"primaryKey" json:"id"`
+	UserID       uint      `gorm:"not null" json:"user_id"`
+	User         User      `gorm:"foreignKey:UserID" json:"-"`
 	ProductID    uint      `gorm:"not null" json:"product_id"`
 	Product      Product   `gorm:"foreignKey:ProductID" json:"-"`
 	Name         string    `gorm:"not null" json:"name"`
