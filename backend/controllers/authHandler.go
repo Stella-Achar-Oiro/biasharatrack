@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/OAthooh/BiasharaTrack.git/models"
@@ -69,7 +70,7 @@ func (auth *AuthHandler) Login(c *gin.Context) {
 		"exp":       time.Now().Add(time.Hour * 24).Unix(), // Token expires in 24 hours
 	})
 
-	tokenString, err := token.SignedString([]byte("f50559429275498b09d13392269fc0fd02a2f548d8470c3765a8895212080636")) // To Do Later Replace with secure secret key
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
 		utils.ErrorLogger("Error generating token: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
@@ -158,7 +159,7 @@ func (auth *AuthHandler) Register(c *gin.Context) {
 		"exp":           time.Now().Add(time.Hour * 24).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("your-secret-key")) // To Do Later Replace with secure secret key
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
 		utils.ErrorLogger("Error generating token for new user: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
