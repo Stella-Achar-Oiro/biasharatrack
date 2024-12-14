@@ -61,11 +61,12 @@ check-env:
 		echo "Error: .env file does not exist. Run 'make create-env' first."; \
 		exit 1; \
 	fi
-	@if grep -q "=$$$\|=$$" "$(BACKEND_DIR)/.env"; then \
-		echo "Error: Some environment variables are not set in .env file."; \
-		echo "Please fill in all variables in $(BACKEND_DIR)/.env"; \
-		exit 1; \
-	fi
+	@for var in DB_USER DB_PASSWORD DB_ENDPOINT DB_NAME DB_PORT MPESA_CONSUMER_KEY MPESA_CONSUMER_SECRET MPESA_PASSKEY MPESA_BUSINESS_SHORTCODE MPESA_ENVIRONMENT CALLBACK_URL; do \
+		if ! grep -q "^$$var=.\+" "$(BACKEND_DIR)/.env"; then \
+			echo "Error: $$var is not set in .env file"; \
+			exit 1; \
+		fi \
+	done
 	@echo "Environment variables are properly set."
 
 .PHONY: check-ngrok
