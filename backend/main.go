@@ -57,6 +57,10 @@ func main() {
 
 	// Register routes
 	routes.AuthRoutes(router, db.DB)
+	routes.CreditRoutes(router, db.DB)
+	routes.InventoryManagementRoutes(router, db.DB)
+	routes.SalesManagementRoutes(router, db.DB)
+	routes.SetupReceiptRoutes(router, db.DB)
 
 	fmt.Println("Server is running on port 8080")
 	// Start server on port 8080
