@@ -5,7 +5,7 @@ import { CreditCustomer } from "../types/credits";
 import { authFetch } from './auth';
 
 // Update the API_URL to use environment variable with fallback
-export const API_URL = import.meta.env.VITE_API_URL || 'https://biasharatrack_backend.onrender.com';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://biasharatrack-backend.onrender.com';
 
 interface ApiResponse<T> {
   success: boolean;
