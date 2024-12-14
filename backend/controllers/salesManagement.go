@@ -191,6 +191,7 @@ func processSales(saleData SaleData, userID uint, im *SalesManagementHandler, c 
 
 		// Record stock movement
 		stockMovement := models.StockMovement{
+			UserID:         userID,
 			ProductID:      sellRequest.ProductID,
 			ChangeType:     saleData.PaymentMethod,
 			QuantityChange: -sellRequest.Quantity,
