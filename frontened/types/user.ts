@@ -1,10 +1,10 @@
 export interface User {
+    full_name: string;
     id: string;
-    name: string;
     email: string;
     imageUrl?: string;
     role: 'owner' | 'manager' | 'staff';
-    businessName: string;
+    business_name: string;
     telephone: string;
     location: string;
   }
