@@ -1,6 +1,15 @@
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
 import { useAuth as useAuthHook } from '../utils/auth';
-import { User } from '../types/user';  // Import the User interface
+import { User } from '../../types/user';  // Import the User interface
+
+interface RegisterData {
+  fullName: string;
+  email: string;
+  password: string;
+  businessName: string;
+  telephone: string;
+  location: string;
+}
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -8,7 +17,7 @@ interface AuthContextType {
   loading: boolean;
   error: string | null;
   login: (credentials: { email: string; password: string }) => Promise<void>;
-  register: (credentials: { fullName: string; email: string; password: string }) => Promise<void>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   checkAuth: () => void;
 }
@@ -48,7 +57,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           name: user.full_name || '',
           email: user.email,
           role: 'owner',
-          businessName: 'Default Business', // businessName: user.business_name || 'Default Business', implement real busines name
+          businessName: user.business_name,
+          telephone: user.telephone,
+          location: user.location,
           imageUrl: ''
           } : null,
         loading,
