@@ -1,4 +1,10 @@
 {
+  "common": {
+    "previous": "Iliyopita",
+    "next": "Inayofuata",
+    "page": "Ukurasa",
+    "of": "ya"
+  },
   "errors": {
     "notFound": {
       "title": "Ukurasa Haujapatikana",
@@ -28,7 +34,9 @@
   "userProfile": {
     "business": "Biashara",
     "accountSettings": "Mipangilio ya Akaunti",
-    "imageAlt": "Picha ya wasifu ya {{name}}"
+    "imageAlt": "Picha ya wasifu ya {{name}}",
+    "location": "Mahali",
+    "telephone": "Simu"
   },
   "creditMetrics": {
     "totalOutstanding": "Jumla ya Deni",
@@ -284,6 +292,7 @@
       "sales": "Mauzo",
       "analytics": "Uchambuzi",
       "credit": "Mikopo",
+      "receipts": "Risiti",
       "reports": "Ripoti",
       "tutorials": "Mafunzo",
       "settings": "Mipangilio",
@@ -296,6 +305,32 @@
     },
     "sidebar": {
       "openSidebar": "Fungua upau wa kando"
+    }
+  },
+  "receipts": {
+    "title": "Risiti",
+    "metrics": {
+      "totalRevenue": "Jumla ya Mapato",
+      "totalReceipts": "Jumla ya Risiti",
+      "averageAmount": "Kiasi cha Wastani",
+      "recentReceipts": "Risiti za Hivi Karibuni"
+    },
+    "search": "Tafuta risiti...",
+    "filters": {
+      "all": "Njia Zote za Malipo",
+      "cash": "Pesa Taslimu",
+      "mpesa": "M-PESA",
+      "credit": "Mkopo"
+    },
+    "startDate": "Tarehe ya Kuanza",
+    "endDate": "Tarehe ya Kumaliza",
+    "table": {
+      "receiptNumber": "Nambari ya Risiti",
+      "date": "Tarehe",
+      "customer": "Mteja",
+      "amount": "Kiasi",
+      "payment": "Njia ya Malipo",
+      "actions": "Vitendo"
     }
   },
   "hero": {
@@ -393,6 +428,12 @@
       "loginLink": "Ingia",
       "submit": "Tengeneza akaunti",
       "imageAlt": "Muuzaji wa Soko la Kenya"
-    }
+    },
+    "businessName": "Jina la Biashara",
+    "businessNamePlaceholder": "Ingiza jina la biashara yako",
+    "telephone": "Nambari ya Simu",
+    "telephonePlaceholder": "Ingiza nambari yako ya simu",
+    "location": "Mahali pa Biashara",
+    "locationPlaceholder": "Ingiza mahali pa biashara yako"
   }
 }
