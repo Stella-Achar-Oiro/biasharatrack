@@ -29,6 +29,27 @@ help:
 	@echo "  clean          - Clean up build artifacts"
 	@echo "  install        - Install all dependencies"
 	@echo "  start-ngrok    - Start ngrok and update callback URL"
+	@echo "  create-env     - Create .env file in backend directory"
+
+.PHONY: create-env
+create-env:
+	@echo "Creating .env file in backend directory..."
+	@if [ ! -f "$(BACKEND_DIR)/.env" ]; then \
+		echo "DB_USER=" > $(BACKEND_DIR)/.env; \
+		echo "DB_PASSWORD=" >> $(BACKEND_DIR)/.env; \
+		echo "DB_ENDPOINT=" >> $(BACKEND_DIR)/.env; \
+		echo "DB_NAME=" >> $(BACKEND_DIR)/.env; \
+		echo "DB_PORT=" >> $(BACKEND_DIR)/.env; \
+		echo "MPESA_CONSUMER_KEY=" >> $(BACKEND_DIR)/.env; \
+		echo "MPESA_CONSUMER_SECRET=" >> $(BACKEND_DIR)/.env; \
+		echo "MPESA_PASSKEY=" >> $(BACKEND_DIR)/.env; \
+		echo "MPESA_BUSINESS_SHORTCODE=" >> $(BACKEND_DIR)/.env; \
+		echo "MPESA_ENVIRONMENT=sandbox" >> $(BACKEND_DIR)/.env; \
+		echo "CALLBACK_URL=http://localhost:8080" >> $(BACKEND_DIR)/.env; \
+		echo ".env file created successfully"; \
+	else \
+		echo ".env file already exists"; \
+	fi
 
 .PHONY: build-backend
 build-backend:
@@ -50,7 +71,7 @@ run-frontend:
 	cd $(FRONTEND_DIR) && $(NPM) run dev
 
 .PHONY: run
-run:
+run: create-env
 	make -j 2 start-ngrok run-backend run-frontend 
 
 .PHONY: clean
@@ -59,7 +80,7 @@ clean:
 	cd $(FRONTEND_DIR) && rm -rf dist node_modules
 
 .PHONY: install
-install:
+install: create-env
 	cd $(BACKEND_DIR) && go mod download
 	cd $(FRONTEND_DIR) && $(NPM) install
 
