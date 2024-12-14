@@ -153,6 +153,7 @@ func (im *InventoryManagementHandler) CreateProduct(c *gin.Context) {
 
 	// Create inventory record
 	inventory := models.Inventory{
+		UserID:            userID,
 		ProductID:         product.ID,
 		Quantity:          quantity,
 		LowStockThreshold: threshold,
