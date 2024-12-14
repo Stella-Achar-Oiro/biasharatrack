@@ -621,7 +621,7 @@ export default function SalesEntry() {
         </div>
 
         {renderPaymentFields()}
-        {formData.paymentMethod === 'credit' && (
+        {/* {formData.paymentMethod === 'credit' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-[#011627] mb-1">
@@ -648,7 +648,7 @@ export default function SalesEntry() {
               />
             </div>
           </div>
-        )}
+        )} */}
 
         {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
