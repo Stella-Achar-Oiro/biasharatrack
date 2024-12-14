@@ -339,14 +339,15 @@ func (im *InventoryManagementHandler) DeleteProduct(c *gin.Context) {
 		return
 	}
 
-	if err := im.db.Where("id = ? AND user_id = ?", id, userID).Delete(&models.Product{}).Error; err != nil {
-		utils.ErrorLogger("Failed to delete product %s for user %d: %v", id, userID, err)
-		c.JSON(500, gin.H{"error": "Failed to delete product"})
+	// Mark the product as inactive
+	if err := im.db.Model(&models.Product{}).Where("id = ? AND user_id = ?", id, userID).Update("active", false).Error; err != nil {
+		utils.ErrorLogger("Failed to mark product %s as inactive for user %d: %v", id, userID, err)
+		c.JSON(500, gin.H{"error": "Failed to mark product as inactive"})
 		return
 	}
 
-	utils.InfoLogger("Successfully deleted product %s for user %d", id, userID)
-	c.JSON(200, gin.H{"message": "Product deleted successfully"})
+	utils.InfoLogger("Successfully marked product %s as inactive for user %d", id, userID)
+	c.JSON(200, gin.H{"message": "Product marked as inactive successfully"})
 }
 
 func (im *InventoryManagementHandler) GetProduct(c *gin.Context) {
