@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: biasharatrack-backend
+    name: biasharatrack_backend
     env: go
     buildCommand: go build -o main .
     startCommand: ./main
@@ -36,4 +36,4 @@ services:
     publishDir: frontened/dist
     envVars:
       - key: VITE_API_URL
-        value: https://biasharatrack-backend.onrender.com
+        value: https://biasharatrack_backend.onrender.com

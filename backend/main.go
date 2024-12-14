@@ -42,7 +42,7 @@ func main() {
     config := cors.DefaultConfig()
     config.AllowOrigins = []string{
         "http://localhost:5173",
-        "https://biasharatrack-frontend.onrender.com",
+        "https://biasharatrack.onrender.com",
         callbackURL,
     }
     config.AllowCredentials = true
