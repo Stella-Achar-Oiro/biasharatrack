@@ -14,6 +14,7 @@ type Product struct {
 	PhotoPath   string    `json:"photo_path,omitempty"`
 	CreatedAt   time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt   time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+	Active      bool      `gorm:"default:true" json:"active"`
 }
 
 type Inventory struct {
