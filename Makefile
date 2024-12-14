@@ -117,8 +117,8 @@ run-frontend:
 	cd $(FRONTEND_DIR) && $(NPM) run dev
 
 .PHONY: run
-run: create-env
-	make -j 2 start-ngrok run-backend run-frontend 
+run: create-env check-env
+	make -j 2 start-ngrok run-backend run-frontend
 
 .PHONY: clean
 clean:
