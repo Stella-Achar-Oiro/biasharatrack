@@ -38,11 +38,36 @@ func main() {
     fmt.Println("Initializing Gin router...")
     router := gin.Default()
 
-    // Configure CORS
+    // Configure CORS with expanded settings
     config := cors.DefaultConfig()
-    config.AllowOrigins = []string{"http://localhost:5173", callbackURL}
-    config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
-    config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
+    config.AllowOrigins = []string{
+        "http://localhost:5173",
+        "https://biasharatrack-frontend.onrender.com",
+        callbackURL,
+    }
+    config.AllowCredentials = true
+    config.AllowHeaders = []string{
+        "Origin",
+        "Content-Type",
+        "Accept",
+        "Authorization",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Methods",
+    }
+    config.AllowMethods = []string{
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "OPTIONS",
+    }
+    config.ExposeHeaders = []string{
+        "Content-Length",
+        "Authorization",
+        "Access-Control-Allow-Origin",
+    }
     router.Use(cors.New(config))
 
     fmt.Println("Gin router initialized successfully")

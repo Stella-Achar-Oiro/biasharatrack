@@ -12,6 +12,7 @@ export interface User {
   location: string;
   token: string;
 }
+
 interface LoginCredentials {
   email: string;
   password: string;
@@ -35,43 +36,55 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
   console.log('Token:', token);
   console.log('URL:', url);
 
-  const headers = {
-    ...options.headers,
-    'Authorization': `Bearer ${token}`,
+  // Create base headers
+  const defaultHeaders: HeadersInit = {
+    'Content-Type': 'application/json',
+    'Authorization': token ? `Bearer ${token}` : '',
   };
 
+  // Don't set Content-Type if we're sending FormData
+  if (options.body instanceof FormData) {
+    delete defaultHeaders['Content-Type'];
+  }
 
+  const headers = {
+    ...defaultHeaders,
+    ...options.headers,
+  };
 
   try {
     const response = await fetch(`${API_URL}${url}`, {
       ...options,
       headers,
+      credentials: 'include', // Important for CORS
+      mode: 'cors', // Explicitly set CORS mode
     });
-  
 
-  
     if (response.status === 401) {
       console.log('Unauthorized access detected');
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       window.location.href = '/login';
       throw new Error('Unauthorized');
     }
 
-
     return response;
   } catch (error) {
     console.error('Fetch Error:', error);
+    if (error instanceof Error && error.message === 'Failed to fetch') {
+      console.error('Network error - API might be down or CORS issue');
+    }
     throw error;
   }
 };
+
 export function useAuthState() {
-  const [user, setUser] = useState<User | null>(null);
-  // Changed initial loading to false since we're not doing any initial fetch
+  const [user, setUser] = useState<User | null>(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  
-
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     try {
@@ -89,7 +102,7 @@ export function useAuthState() {
       }
   
       const data: AuthResponse = await response.json();
-      console.log("User data",data);
+      console.log("Login response:", data);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -119,7 +132,7 @@ export function useAuthState() {
       }
 
       const data: AuthResponse = await response.json();
-      console.log("User data",data);
+      console.log("Registration response:", data);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -138,6 +151,8 @@ export function useAuthState() {
     setError(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // Optional: Call logout endpoint if you have one
+    // authFetch('/logout', { method: 'POST' });
   }, []);
 
   const checkAuth = useCallback(async () => {
@@ -161,7 +176,6 @@ export function useAuthState() {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Authentication check failed';
       setError(errorMessage);
-      // Clear everything if token verification fails
       logout();
     } finally {
       setLoading(false);
