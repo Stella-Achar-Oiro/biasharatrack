@@ -3,11 +3,11 @@ import { API_URL } from './api';
 
 export interface User {
   id: string;
-  name: string;
+  full_name: string;
   email: string;
   imageUrl?: string;
   role: 'owner' | 'manager' | 'staff';
-  businessName: string;
+  business_name: string;
   telephone: string;
   location: string;
   token: string;
@@ -40,8 +40,7 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
     'Authorization': `Bearer ${token}`,
   };
 
-  console.log('Request Headers:', headers);
-  console.log('Request Options:', options);
+
 
   try {
     const response = await fetch(`${API_URL}${url}`, {
@@ -49,8 +48,7 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
       headers,
     });
   
-    console.log('Response Status:', response.status);
-    console.log('Response Headers:', response.headers);
+
   
     if (response.status === 401) {
       console.log('Unauthorized access detected');
@@ -59,8 +57,6 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
       throw new Error('Unauthorized');
     }
 
-    const responseData = await response.clone().json();
-    console.log('Response Data:', responseData);
 
     return response;
   } catch (error) {
@@ -93,6 +89,7 @@ export function useAuthState() {
       }
   
       const data: AuthResponse = await response.json();
+      console.log("User data",data);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
