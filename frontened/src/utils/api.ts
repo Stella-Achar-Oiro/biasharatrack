@@ -295,6 +295,30 @@ export const inventoryApi = {
       };
     }
   }
+  ,
+
+  deleteProduct: async (productId: string): Promise<ApiResponse<null>> => {
+    try {
+      const response = await authFetch(`/delete-product/${productId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to delete product');
+      }
+
+      return {
+        success: true,
+        data: null
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'An unknown error occurred'
+      };
+    }
+  }
 };
 export type { SalesMetrics };
 
