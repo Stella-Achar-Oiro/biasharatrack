@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, useContext, ReactNode, useEffect } from 'react';
 import { useAuthState } from '../utils/auth';
 import { User } from '../../types/user';  // Import the User interface
 
@@ -26,7 +26,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [initialized, setInitialized] = useState(false);
+ 
   const { 
     user,
     loading = true,
@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (token) {
       checkAuth();
     }
-    setInitialized(true);
   }, [checkAuth]);
 
   const value = {
