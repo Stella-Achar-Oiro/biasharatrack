@@ -48,6 +48,21 @@ export default function ProductList() {
     fetchProducts();
   }, []);
 
+  const handleDelete = async (productId: string) => {
+    if (window.confirm(t('inventory.productList.confirmDelete'))) {
+      try {
+        const response = await inventoryApi.deleteProduct(productId);
+        if (response.success) {
+          setProducts(products.filter(product => product.id !== Number(productId)));
+        } else {
+          setError(response.error || 'Failed to delete product');
+        }
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'An error occurred while deleting the product');
+      }
+    }
+  };
+
   const filteredProducts = products.filter((product) => {
     if (!product || !product.name) return false;
 
@@ -214,6 +229,7 @@ export default function ProductList() {
                       <button
                         className="text-[#E71D36] hover:text-[#c91126]"
                         title={t('inventory.productList.actions.delete')}
+                        onClick={() => handleDelete(product.id.toString())}
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
