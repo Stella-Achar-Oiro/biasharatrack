@@ -251,6 +251,7 @@ func processSales(saleData SaleData, userID uint, im *SalesManagementHandler, c 
 		// Check for low stock alert
 		if inventory.Quantity <= inventory.LowStockThreshold {
 			alert := models.LowStockAlert{
+				UserID:       userID,
 				ProductID:    sellRequest.ProductID,
 				AlertMessage: fmt.Sprintf("Product stock is low. Current quantity: %d", inventory.Quantity),
 				Resolved:     false,
@@ -261,6 +262,8 @@ func processSales(saleData SaleData, userID uint, im *SalesManagementHandler, c 
 				utils.ErrorLogger("Failed to create low stock alert for product %d: %v", sellRequest.ProductID, err)
 			}
 		}
+
+		utils.InfoLogger("Checking low stock alert for product %d: current quantity %d, threshold %d", sellRequest.ProductID, inventory.Quantity, inventory.LowStockThreshold)
 	}
 
 	// Update receipt with final total
