@@ -48,6 +48,8 @@ create-env:
 		echo "MPESA_BUSINESS_SHORTCODE=" >> $(BACKEND_DIR)/.env; \
 		echo "MPESA_ENVIRONMENT=sandbox" >> $(BACKEND_DIR)/.env; \
 		echo "CALLBACK_URL=http://localhost:8080" >> $(BACKEND_DIR)/.env; \
+		JWT_SECRETKEY=$$(openssl rand -base64 32); \
+		echo "JWT_SECRETKEY=$$JWT_SECRETKEY" >> $(BACKEND_DIR)/.env; \
 		echo ".env file created successfully"; \
 		echo "Please fill in the environment variables in $(BACKEND_DIR)/.env before running the servers"; \
 	else \
@@ -61,7 +63,7 @@ check-env:
 		echo "Error: .env file does not exist. Run 'make create-env' first."; \
 		exit 1; \
 	fi
-	@for var in DB_USER DB_PASSWORD DB_ENDPOINT DB_NAME DB_PORT MPESA_CONSUMER_KEY MPESA_CONSUMER_SECRET MPESA_PASSKEY MPESA_BUSINESS_SHORTCODE MPESA_ENVIRONMENT CALLBACK_URL; do \
+	@for var in DB_USER DB_PASSWORD DB_ENDPOINT DB_NAME DB_PORT MPESA_CONSUMER_KEY MPESA_CONSUMER_SECRET MPESA_PASSKEY MPESA_BUSINESS_SHORTCODE MPESA_ENVIRONMENT CALLBACK_URL JWT_SECRETKEY; do \
 		if ! grep -q "^$$var=.\+" "$(BACKEND_DIR)/.env"; then \
 			echo "Error: $$var is not set in .env file"; \
 			exit 1; \
