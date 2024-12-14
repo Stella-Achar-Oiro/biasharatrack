@@ -34,7 +34,7 @@ export default function FloatingLanguageSwitcher() {
   };
 
   return (
-    <div className="fixed top-3 right-4 sm:right-12 z-50" ref={dropdownRef}>
+    <div className="fixed top-3 right-8 sm:right-16 z-50" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-[#2EC4B6] text-white hover:bg-[#25a093] transition-colors shadow-lg"
