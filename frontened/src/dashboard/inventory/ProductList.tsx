@@ -222,7 +222,7 @@ export default function ProductList() {
                       </button>
                       <button
                         className="text-[#FF9F1C] hover:text-[#f39200]"
-                        title={t('inventory.productList.actions.title')}
+                        title={t('inventory.productList.actions.edit')}
                       >
                         <Edit2 className="w-5 h-5" />
                       </button>
