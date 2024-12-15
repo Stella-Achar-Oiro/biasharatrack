@@ -34,15 +34,18 @@ export default function FloatingLanguageSwitcher() {
   };
 
   return (
-    <div className="fixed top-3 right-14 xs:right-16 sm:right-20 md:right-24 lg:right-28 z-50" ref={dropdownRef}>
+    <div 
+      className="fixed top-4 right-12 xs:right-14 sm:right-16 md:right-20 lg:right-24 z-50" 
+      ref={dropdownRef}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-[#2EC4B6] text-white hover:bg-[#25a093] transition-colors shadow-lg"
+        className="flex items-center gap-1 xs:gap-2 px-2 xs:px-3 sm:px-4 py-1 xs:py-1.5 rounded-full bg-[#2EC4B6] text-white hover:bg-[#25a093] transition-colors shadow-lg text-xs xs:text-sm sm:text-base"
         aria-label="Toggle language"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
+        <Globe className="w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5" />
         {/* Hide full text on mobile, show short form */}
         <span className="hidden sm:inline">
           {getCurrentLanguage().label}
@@ -52,7 +55,7 @@ export default function FloatingLanguageSwitcher() {
           {getCurrentLanguage().shortLabel}
         </span>
         <span 
-          className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} text-xs sm:text-sm`}
+          className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} text-[10px] xs:text-xs sm:text-sm`}
           aria-hidden="true"
         >
           ▼
@@ -60,18 +63,18 @@ export default function FloatingLanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-32 sm:w-40 bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="absolute right-0 mt-1 w-24 xs:w-28 sm:w-36 bg-white rounded-lg shadow-lg overflow-hidden">
           {languages.map((lang) => (
             <button
               key={lang.code}
               onClick={() => changeLanguage(lang.code)}
-              className={`w-full px-3 sm:px-4 py-2 text-left hover:bg-gray-100 transition-colors ${
+              className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-1 text-left hover:bg-gray-100 transition-colors text-xs xs:text-sm sm:text-base ${
                 i18n.language === lang.code 
                   ? 'bg-gray-50 text-[#2EC4B6]' 
                   : 'text-gray-700'
               }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 xs:gap-2">
                 {/* Show both short and full labels with responsive visibility */}
                 <span className="hidden sm:inline">{lang.label}</span>
                 <span className="inline sm:hidden">{lang.shortLabel}</span>
