@@ -241,7 +241,7 @@ export default function SalesEntry() {
         ? formData.customerPhone 
         : `254${formData.customerPhone.replace(/^0|^\+254|^254/, '')}`;
 
-      const response = await fetch('http://localhost:8080/api/mpesa/initiate', {
+      const response = await fetch('https://biasharatrack-backend.onrender.com//api/mpesa/initiate', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
