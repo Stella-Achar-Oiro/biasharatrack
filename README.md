@@ -43,6 +43,7 @@ MPESA_BUSINESS_SHORTCODE=your_shortcode
 MPESA_ENVIRONMENT=sandbox
 CALLBACK_URL=http://localhost:8080
 ```
+For code audit, you can request permission to get the database .env credentials using this link [here](https://docs.google.com/document/d/1dJhGcxFmLY53DZv-6hLlFuCEZeYJ4vAKLVMDyV-FWSY/edit?tab=t.0). The permission to access the credentials will be given to you promptly.
 
 5. Start the application:
 ```bash
