@@ -1,8 +1,10 @@
 import { Users, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreditPanel() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
@@ -19,8 +21,11 @@ export default function CreditPanel() {
           <AlertCircle className="h-5 w-5 mr-2" />
           <span className="text-sm">{t('creditPanel.paymentsdue', { count: 2 })}</span>
         </div>
-        <button className="w-full bg-[#2EC4B6] text-white py-2 rounded-lg hover:bg-[#28b0a3] transition-colors">
-        {t('creditPanel.button')}
+        <button 
+          onClick={() => navigate('/dashboard/credits')}
+          className="w-full bg-[#2EC4B6] text-white py-2 rounded-lg hover:bg-[#28b0a3] transition-colors"
+        >
+          {t('creditPanel.button')}
         </button>
       </div>
     </div>

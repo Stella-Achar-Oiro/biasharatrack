@@ -1,8 +1,10 @@
 import { DollarSign, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export default function FinancialPanel() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
@@ -19,8 +21,11 @@ export default function FinancialPanel() {
           <ArrowUpRight className="h-5 w-5 mr-2" />
           <span className="text-sm">{t('financialPanel.increase', { percentage: 8 })}</span>
         </div>
-        <button className="w-full bg-[#2EC4B6] text-white py-2 rounded-lg hover:bg-[#28b0a3] transition-colors">
-        {t('financialPanel.button')}
+        <button 
+          onClick={() => navigate('/dashboard/finances')}
+          className="w-full bg-[#2EC4B6] text-white py-2 rounded-lg hover:bg-[#28b0a3] transition-colors"
+        >
+          {t('financialPanel.button')}
         </button>
       </div>
     </div>
