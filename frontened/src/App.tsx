@@ -13,9 +13,17 @@ import CreditsManagement from './pages/credits/CreditsManagement';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './context/ProtectedRoute';
 import ReceiptManagement from './pages/receipts/ReceiptManagement';
+import { useAuthState } from './utils/auth';
+import { useEffect } from 'react';
 
 
 function App() {
+  const { checkAuth } = useAuthState();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
   return (
     <ErrorBoundary>
       <Router>
