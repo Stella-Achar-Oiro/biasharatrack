@@ -210,7 +210,7 @@ func (auth *AuthHandler) VerifyToken(c *gin.Context) {
 	}
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte("f50559429275498b09d13392269fc0fd02a2f548d8470c3765a8895212080636"), nil // Replace with secure secret key
+		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 
 	if err != nil || !token.Valid {
