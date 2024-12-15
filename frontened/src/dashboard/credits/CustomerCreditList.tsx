@@ -168,19 +168,19 @@ export default function CustomerCreditList() {
                   <div className="flex justify-end space-x-2">
                     <button
                       className="text-[#2EC4B6] hover:text-[#28b0a3]"
-                      title="View Details"
+                      title={t('credits.customerList.actions.viewDetails')}
                     >
                       <Eye className="w-5 h-5" />
                     </button>
                     <button
                       className="text-[#FF9F1C] hover:text-[#f39200]"
-                      title="Record Payment"
+                      title={t('credits.customerList.actions.recordPayment')}
                     >
                       <DollarSign className="w-5 h-5" />
                     </button>
                     <button
                       className="text-[#2EC4B6] hover:text-[#28b0a3]"
-                      title="Send Reminder"
+                      title={t('credits.customerList.actions.sendReminder')}
                     >
                       <MessageCircle className="w-5 h-5" />
                     </button>
