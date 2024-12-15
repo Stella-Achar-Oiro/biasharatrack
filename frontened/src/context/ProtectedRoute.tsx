@@ -1,20 +1,20 @@
-import { Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+// src/context/ProtectedRoute.tsx
+import { Navigate, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAuthState } from '../utils/auth';
 
-interface ProtectedRouteProps {
-  children: JSX.Element;
-}
+const ProtectedRoute = () => {
+  const { isAuthenticated, checkAuth, loading } = useAuthState();
 
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated, loading } = useAuth();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator
+    return <div>Loading...</div>; // Or your loading component
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/unauthorized" replace />;
-  }
+  return isAuthenticated() ? <Outlet /> : <Navigate to="/login" />;
+};
 
-  return children;
-} 
+export default ProtectedRoute;

@@ -30,17 +30,23 @@ interface AuthResponse {
   user: User;
 }
 
-export const authFetch = async (url: string, options: RequestInit = {}) => {
-  const token = localStorage.getItem('token');
+interface FetchOptions extends RequestInit {
+  requiresAuth?: boolean;
+}
 
-  console.log('Token:', token);
-  console.log('URL:', url);
+export const authFetch = async (url: string, options: FetchOptions = {}) => {
+  const { requiresAuth = true, ...fetchOptions } = options;
+  const token = localStorage.getItem('token');
 
   // Create base headers
   const defaultHeaders: HeadersInit = {
     'Content-Type': 'application/json',
-    'Authorization': token ? `Bearer ${token}` : '',
   };
+
+  // Only add Authorization header if token exists and route requires auth
+  if (token && requiresAuth) {
+    defaultHeaders['Authorization'] = `Bearer ${token}`;
+  }
 
   // Don't set Content-Type if we're sending FormData
   if (options.body instanceof FormData) {
@@ -53,15 +59,19 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
   };
 
   try {
+    console.log('Making request to:', `${API_URL}${url}`);
+    console.log('With headers:', headers);
+
     const response = await fetch(`${API_URL}${url}`, {
-      ...options,
+      ...fetchOptions,
       headers,
-      credentials: 'include', // Important for CORS
-      mode: 'cors', // Explicitly set CORS mode
+      credentials: 'include',
+      mode: 'cors',
     });
 
-    if (response.status === 401) {
-      console.log('Unauthorized access detected');
+    // Only redirect to login if the route requires auth and we get a 401
+    if (response.status === 401 && requiresAuth) {
+      console.log('Unauthorized access detected - clearing auth state');
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
@@ -94,6 +104,7 @@ export function useAuthState() {
       const response = await authFetch('/login', {
         method: 'POST',
         body: JSON.stringify(credentials),
+        requiresAuth: false // Login endpoint is public
       });
   
       if (!response.ok) {
@@ -102,7 +113,7 @@ export function useAuthState() {
       }
   
       const data: AuthResponse = await response.json();
-      console.log("Login response:", data);
+      console.log("Login successful:", data);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -124,6 +135,7 @@ export function useAuthState() {
       const response = await authFetch('/register', {
         method: 'POST',
         body: JSON.stringify(credentials),
+        requiresAuth: false // Register endpoint is public
       });
 
       if (!response.ok) {
@@ -132,7 +144,7 @@ export function useAuthState() {
       }
 
       const data: AuthResponse = await response.json();
-      console.log("Registration response:", data);
+      console.log("Registration successful:", data);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -151,20 +163,19 @@ export function useAuthState() {
     setError(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    // Optional: Call logout endpoint if you have one
-    // authFetch('/logout', { method: 'POST' });
+    window.location.href = '/';
   }, []);
 
   const checkAuth = useCallback(async () => {
     const token = localStorage.getItem('token');
     if (!token) {
       setUser(null);
-      return;
+      return false;
     }
 
     try {
       setLoading(true);
-      const response = await authFetch('/verify-token');
+      const response = await authFetch('/verify-token', { requiresAuth: true });
 
       if (!response.ok) {
         throw new Error('Token verification failed');
@@ -173,14 +184,20 @@ export function useAuthState() {
       const { user: userData } = await response.json();
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
+      return true;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Authentication check failed';
       setError(errorMessage);
       logout();
+      return false;
     } finally {
       setLoading(false);
     }
   }, [logout]);
+
+  const isAuthenticated = useCallback(() => {
+    return !!user && !!localStorage.getItem('token');
+  }, [user]);
 
   return {
     user,
@@ -189,6 +206,7 @@ export function useAuthState() {
     login,
     register,
     logout,
-    checkAuth
+    checkAuth,
+    isAuthenticated
   };
 }
