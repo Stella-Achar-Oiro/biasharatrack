@@ -14,12 +14,12 @@ export default function AnalyticsPanel() {
       </div>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500">{t('analyticsPanel.insights')}</span>
-          <span className="text-lg font-medium">12</span>
+          <span className="text-sm text-gray-500">{t('analyticsPanel.totalSales')}</span>
+          <span className="text-lg font-medium">KSH 245,670</span>
         </div>
         <div className="flex items-center text-[#2EC4B6]">
           <TrendingUp className="h-5 w-5 mr-2" />
-          <span className="text-sm">{t('analyticsPanel.newTrends')}</span>
+          <span className="text-sm">{t('analyticsPanel.growth', { percent: 12 })}</span>
         </div>
         <button 
           onClick={() => navigate('/dashboard/analytics')}

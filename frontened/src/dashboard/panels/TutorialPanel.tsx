@@ -14,12 +14,12 @@ export default function TutorialPanel() {
       </div>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500">{t('tutorialPanel.available')}</span>
+          <span className="text-sm text-gray-500">{t('tutorialPanel.newVideos')}</span>
           <span className="text-lg font-medium">8</span>
         </div>
         <div className="flex items-center text-[#2EC4B6]">
           <PlayCircle className="h-5 w-5 mr-2" />
-          <span className="text-sm">{t('tutorialPanel.newGuides')}</span>
+          <span className="text-sm">{t('tutorialPanel.latestVideo')}</span>
         </div>
         <button 
           onClick={() => navigate('/dashboard/tutorials')}
