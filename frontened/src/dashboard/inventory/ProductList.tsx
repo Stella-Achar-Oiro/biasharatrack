@@ -5,6 +5,7 @@ import { categories } from '../../data/categories';
 import { formatDate, formatCurrency } from '../../utils/formatters';
 import { inventoryApi } from '../../utils/api';
 import { useTranslation } from 'react-i18next';
+import { API_URL } from '../../utils/api';
 
 export default function ProductList() {
   const { t } = useTranslation();
@@ -179,11 +180,11 @@ export default function ProductList() {
                       <div className="h-10 w-10 flex-shrink-0">
                         <img
                           className="h-10 w-10 rounded-full object-cover"
-                          src={product.photo_path ? `http://localhost:8080${product.photo_path}` : 'http://localhost:8080/uploads/products/default_images.png'}
+                          src={product.photo_path ? `${API_URL}${product.photo_path}` : `${API_URL}/uploads/products/default_images.png`}
                           alt={product.name}
                           onError={(e) => {
                             console.log('Image failed to load:', product.photo_path);
-                            (e.target as HTMLImageElement).src = 'http://localhost:8080/uploads/products/default_images.png';
+                            (e.target as HTMLImageElement).src = `${API_URL}/uploads/products/default_images.png`;
                           }}
                         />
                       </div>
