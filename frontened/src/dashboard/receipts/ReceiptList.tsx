@@ -9,6 +9,7 @@ import { inventoryApi } from '../../utils/api';
 import jsPDF from 'jspdf';
 import { useAuth } from '../../context/AuthContext';
 
+
 export default function ReceiptList() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -69,7 +70,7 @@ export default function ReceiptList() {
     const doc = new jsPDF();
     
     // Get business details from auth context
-    const businessName = user?.businessName || 'Business Name Not Set';
+    const businessName = user?.business_name || 'Business Name Not Set';
     const businessPhone = user?.telephone || 'Phone Not Set';
     const businessAddress = user?.location || 'Address Not Set';
     const customerName = receipt.customerName || 'Walk-in Customer';
@@ -236,14 +237,14 @@ export default function ReceiptList() {
                     <button
                       onClick={() => handleViewReceipt(receipt)}
                       className="text-[#2EC4B6] hover:text-[#28b0a3]"
-                      title={t('receipts.actions.view')}
+                      title={t('inventory.actions.view')}
                     >
                       <Eye className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => handleDownloadReceipt(receipt)}
                       className="text-[#FF9F1C] hover:text-[#f39200]"
-                      title={t('receipts.actions.download')}
+                      title={t('inventory.actions.download')}
                     >
                       <Download className="w-5 h-5" />
                     </button>
