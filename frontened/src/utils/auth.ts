@@ -29,6 +29,7 @@ interface AuthResponse {
   user: User;
 }
 
+
 export const authFetch = async (url: string, options: RequestInit = {}) => {
   const token = localStorage.getItem('token');
 
@@ -38,25 +39,23 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
   const headers = {
     ...options.headers,
     'Authorization': `Bearer ${token}`,
-  };
-
-
+  } as HeadersInit;
+  if (!(options.body instanceof FormData)) {
+    (headers as any)['Content-Type'] = 'application/json';
+  }
 
   try {
     const response = await fetch(`${API_URL}${url}`, {
       ...options,
       headers,
     });
-  
 
-  
     if (response.status === 401) {
       console.log('Unauthorized access detected');
       localStorage.removeItem('token');
       window.location.href = '/login';
       throw new Error('Unauthorized');
     }
-
 
     return response;
   } catch (error) {
@@ -65,7 +64,10 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
   }
 };
 export function useAuthState() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   // Changed initial loading to false since we're not doing any initial fetch
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,11 +91,14 @@ export function useAuthState() {
       }
   
       const data: AuthResponse = await response.json();
-      console.log("User data",data);
-      setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       
+      setUser(data.user);
+      console.log("Token from login",localStorage.getItem('token'));
+      await new Promise(resolve => setTimeout(resolve, 0));
+      
+      return data;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Login failed. Please try again.';
       setError(errorMessage);
