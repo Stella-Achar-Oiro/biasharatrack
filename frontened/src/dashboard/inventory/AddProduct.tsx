@@ -358,7 +358,7 @@ export default function AddProduct() {
             {isSubmitting ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                {t('inventory.addProduct.processing')}
+                {t('salesEntry.messages.processingAdding')}
               </>
             ) : (
               <>
