@@ -238,6 +238,7 @@
       },
       "minimum": "Min",
       "actions": {
+        "download": "Download",
         "view": "View",
         "edit": "Edit",
         "delete": "Delete"

@@ -9,6 +9,7 @@ import { inventoryApi } from '../../utils/api';
 import jsPDF from 'jspdf';
 import { useAuth } from '../../context/AuthContext';
 
+
 export default function ReceiptList() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -69,7 +70,7 @@ export default function ReceiptList() {
     const doc = new jsPDF();
     
     // Get business details from auth context
-    const businessName = user?.businessName || 'Business Name Not Set';
+    const businessName = user?.business_name || 'Business Name Not Set';
     const businessPhone = user?.telephone || 'Phone Not Set';
     const businessAddress = user?.location || 'Address Not Set';
     const customerName = receipt.customerName || 'Walk-in Customer';
@@ -163,18 +164,18 @@ export default function ReceiptList() {
               <option value="mpesa">{t('receipts.filters.mpesa')}</option>
               <option value="credit">{t('receipts.filters.credit')}</option>
             </select>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col md:flex-row items-center gap-2">
               <DatePicker
                 selected={startDate}
                 onChange={setStartDate}
                 placeholderText={t('receipts.startDate')}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
               />
               <DatePicker
                 selected={endDate}
                 onChange={setEndDate}
                 placeholderText={t('receipts.endDate')}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
               />
             </div>
           </div>
@@ -236,14 +237,14 @@ export default function ReceiptList() {
                     <button
                       onClick={() => handleViewReceipt(receipt)}
                       className="text-[#2EC4B6] hover:text-[#28b0a3]"
-                      title={t('receipts.actions.view')}
+                      title={t('inventory.productList.actions.view')}
                     >
                       <Eye className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => handleDownloadReceipt(receipt)}
                       className="text-[#FF9F1C] hover:text-[#f39200]"
-                      title={t('receipts.actions.download')}
+                      title={t('inventory.productList.actions.download')}
                     >
                       <Download className="w-5 h-5" />
                     </button>

@@ -144,6 +144,7 @@
     "messages": {
       "selectProduct": "Tafadhali chagua bidhaa na uweke kiasi sahihi",
       "addProduct": "Tafadhali ongeza angalau bidhaa moja",
+      "processingAdding": "Inaongeza bidhaa...",
       "success": "Mauzo yamerekidiwa kwa mafanikio!",
       "error": "Imeshindwa kurekodi mauzo. Tafadhali jaribu tena.",
       "stockLimit": "Kuna vipande {quantity} tu vilivyopo",
@@ -243,6 +244,7 @@
       },
       "minimum": "Chini",
       "actions": {
+        "download": "Pakua",
         "view": "Tazama",
         "edit": "Hariri",
         "delete": "Futa"
