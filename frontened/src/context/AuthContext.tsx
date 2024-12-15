@@ -11,12 +11,17 @@ interface RegisterData {
   location: string;
 }
 
+interface AuthResponse {
+  token: string;
+  user: User;
+}
+
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (credentials: { email: string; password: string }) => Promise<void>;
+  login: (credentials: { email: string; password: string }) => Promise<AuthResponse>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   checkAuth: () => void;
